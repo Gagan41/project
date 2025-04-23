@@ -14,10 +14,12 @@
     "framer-motion": "^12.7.4",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.503.0",
     "mongoose": "^8.13.2",
     "next": "^15.3.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hot-toast": "^2.5.2",
     "react-modal": "^3.16.3"
   },
   "devDependencies": {
