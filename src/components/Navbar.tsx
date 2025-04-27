@@ -43,12 +43,22 @@ export default function Navbar() {
             <button className="font-semibold text-white hover:text-purple-300 transition">
               Student Wins
             </button>
-            <button className="font-semibold text-white hover:text-purple-300 transition">
-              Courses
-            </button>
+            <Link href="/courses">
+              <button className="font-semibold text-white hover:text-purple-300 transition">
+                Courses
+              </button>
+            </Link>
             <button className="font-semibold text-white hover:text-purple-300 transition">
               About Us
             </button>
+
+            {user?.role === "admin" && (
+              <Link href="/admin/dashboard">
+                <button className="font-semibold text-purple-400 hover:text-white transition">
+                  Admin Dashboard
+                </button>
+              </Link>
+            )}
           </div>
 
           {/* Desktop Auth Buttons */}
@@ -117,7 +127,7 @@ export default function Navbar() {
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.3 }}
             >
-              {/* Close Button (top-right corner) */}
+              {/* Close Button */}
               <button
                 onClick={() => setIsMenuOpen(false)}
                 className="absolute top-6 right-6"
@@ -144,19 +154,27 @@ export default function Navbar() {
                 About Us
               </button>
 
-              {user ? (
-                <>
-                <Link href="/profile">
-                  <button className="p-2 rounded hover:bg-gray-700 transition">
-                    <User className="w-6 h-6 text-purple-300" />
+              {user?.role === "admin" && (
+                <Link href="/admin/dashboard">
+                  <button className="text-center font-semibold text-purple-400 hover:text-white transition">
+                    Admin Dashboard
                   </button>
                 </Link>
-                <button
-                  onClick={logout}
-                  className="mt-4 px-6 py-2 bg-gray-700 rounded hover:bg-gray-600 transition"
-                >
-                  Logout
-                </button>
+              )}
+
+              {user ? (
+                <>
+                  <Link href="/profile">
+                    <button className="p-2 rounded hover:bg-gray-700 transition">
+                      <User className="w-6 h-6 text-purple-300" />
+                    </button>
+                  </Link>
+                  <button
+                    onClick={logout}
+                    className="mt-4 px-6 py-2 bg-gray-700 rounded hover:bg-gray-600 transition"
+                  >
+                    Logout
+                  </button>
                 </>
               ) : (
                 <div className="flex flex-col gap-3 mt-4 w-full items-center">

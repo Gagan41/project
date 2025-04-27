@@ -4,12 +4,12 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { getData, postData } from "../../utils/api";
 import { useRouter } from "next/navigation";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import ToasterClient from "@/components/ToasterClient";
 import { ArrowLeft } from 'lucide-react'
 
 export default function ProfilePage() {
-  const { token } = useContext(AuthContext);
+  const { token, user } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -83,9 +83,11 @@ export default function ProfilePage() {
 
         <div className="text-sm text-gray-400">
           <p className="mb-1">Current Name: <span className="font-semibold text-white">{initialName}</span></p>
-        </div>
-        <div className="text-sm text-gray-400">
           <p className="mb-1">Current Email: <span className="font-semibold text-white">{initialEmail}</span></p>
+          {/* 👇 Only show Role if it's ADMIN */}
+          {user?.role === 'admin' && (
+            <p className="mb-1">Role: <span className="font-semibold text-white capitalize">{user.role}</span></p>
+          )}
         </div>
 
         <label className="block">
@@ -95,6 +97,7 @@ export default function ProfilePage() {
             placeholder="Enter New Name"
             onChange={(e) => setName(e.target.value)}
             className="mt-1 w-full p-2 bg-gray-700 rounded focus:outline-purple-400"
+            required
           />
         </label>
 
@@ -105,6 +108,7 @@ export default function ProfilePage() {
             placeholder="Enter New Email"
             onChange={(e) => setEmail(e.target.value)}
             className="mt-1 w-full p-2 bg-gray-700 rounded focus:outline-purple-400"
+            required
           />
         </label>
 

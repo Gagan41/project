@@ -1,51 +1,44 @@
 // app/api/user/profile/route.ts
+import { NextRequest, NextResponse } from "next/server"
+import dbConnect from "@/utils/dbConnect"
+import User from "@/models/User"
+import jwt from "jsonwebtoken"
 
-import { NextRequest, NextResponse } from "next/server";
-import dbConnect from "@/utils/dbConnect";
-import User from "@/models/User";
-import jwt from "jsonwebtoken";
+const JWT_SECRET = process.env.JWT_SECRET!
 
-const JWT_SECRET = process.env.JWT_SECRET!;
-
-function verifyToken(token: string | undefined): string {
-  if (!token) throw new Error("No token provided");
-  const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
-  return decoded.userId;
+function verifyToken(token?: string) {
+  if (!token) throw new Error("No token")
+  return (jwt.verify(token, JWT_SECRET) as { userId: string }).userId
 }
 
 export async function GET(req: NextRequest) {
   try {
-    const token = req.headers.get("authorization")?.split(" ")[1];
-    const userId = verifyToken(token);
-    await dbConnect();
-    const user = await User.findById(userId).select("name email");
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
-    return NextResponse.json({ name: user.name, email: user.email });
-  } catch (err) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const token = req.headers.get("authorization")?.split(" ")[1]
+    const userId = verifyToken(token)
+    await dbConnect()
+    const u = await User.findById(userId).select("name email role")
+    if (!u) throw new Error("Not found")
+    return NextResponse.json({ name: u.name, email: u.email, role: u.role })
+  } catch {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const token = req.headers.get("authorization")?.split(" ")[1];
-    const userId = verifyToken(token);
-    const body = await req.json();
+    const token = req.headers.get("authorization")?.split(" ")[1]
+    const userId = verifyToken(token)
+    const { name, email } = await req.json()
 
-    await dbConnect();
-    const user = await User.findById(userId);
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
+    await dbConnect()
+    const u = await User.findById(userId)
+    if (!u) throw new Error("Not found")
 
-    user.name = body.name;
-    user.email = body.email;
-    await user.save();
-
-    return NextResponse.json({ success: true });
-  } catch (err) {
-    return NextResponse.json({ error: "Unauthorized or Invalid Request" }, { status: 401 });
+    u.name = name
+    u.email = email
+    await u.save()
+    return NextResponse.json({ success: true })
+  } catch {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 }

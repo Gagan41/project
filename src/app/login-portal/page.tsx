@@ -8,9 +8,6 @@ export default function LoginPortal() {
 
   return (
     <div className="min-h-screen flex items-center justify-center relative px-4">
-      {/* Matrix background pattern */}
-      <div className="absolute inset-0 z-0 bg-[url('/matrix.gif')] bg-cover bg-center opacity-40" />
-
       {/* Content Container */}
       <div className="relative z-10 bg-gradient-to-br from-purple-800/30 to-black/50 backdrop-blur-lg border border-purple-600/20 shadow-[0_0_40px_#a855f7aa] rounded-2xl p-6 sm:p-8 md:p-14 max-w-xl w-full text-center space-y-6 text-white transition-all duration-300">
         

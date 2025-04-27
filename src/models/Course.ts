@@ -1,17 +1,27 @@
-import mongoose, { Schema, Document } from 'mongoose'
+// models/Course.ts
+import mongoose, { Schema, Document, Model } from 'mongoose';
 
-export interface ICourse extends Document {
-  title: string
-  description: string
-  price: number
-  videoUrl: string
+export interface CourseDoc extends Document {
+  title:       string;
+  description: string;
+  modules:     mongoose.Types.ObjectId[];
 }
 
-const CourseSchema: Schema = new Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  price: { type: Number, required: true },
-  videoUrl: { type: String, required: true },
-}, { timestamps: true })
+const CourseSchema = new Schema<CourseDoc>(
+  {
+    title:       { type: String, required: true },
+    description: { type: String, required: true },
+    modules:     [{ type: Schema.Types.ObjectId, ref: 'Module' }],
+  },
+  { timestamps: true }
+);
 
-export default mongoose.models.Course || mongoose.model<ICourse>('Course', CourseSchema)
+// Ensure the model is registered only once
+let CourseModel: Model<CourseDoc>;
+try {
+  CourseModel = mongoose.model<CourseDoc>('Course');
+} catch {
+  CourseModel = mongoose.model<CourseDoc>('Course', CourseSchema);
+}
+
+export default CourseModel;
