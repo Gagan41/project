@@ -24,4 +24,4 @@ try {
   CourseModel = mongoose.model<CourseDoc>('Course', CourseSchema);
 }
 
-export default CourseModel;
+export { CourseModel };

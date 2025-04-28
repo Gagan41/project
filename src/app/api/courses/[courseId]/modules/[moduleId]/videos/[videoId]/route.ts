@@ -1,16 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/utils/dbConnect';
-import VideoModel from '@/models/Video';
-import ModuleModel from '@/models/Module';
+import { VideoModel } from '@/models/Video';
+import { ModuleModel } from '@/models/Module';
 
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { courseId: string; moduleId: string; videoId: string } }
 ) {
-  await dbConnect();
-  const { moduleId, videoId } = await params;
-
   try {
+    await dbConnect();
+    const { moduleId, videoId } = await params;
+
+    if (!moduleId || !videoId) {
+      return NextResponse.json(
+        { error: 'Module ID and Video ID are required' }, 
+        { status: 400 }
+      );
+    }
+
+    // Verify the module exists
+    const module = await ModuleModel.findById(moduleId);
+    if (!module) {
+      return NextResponse.json({ error: 'Module not found' }, { status: 404 });
+    }
+
     // Delete the video
     const deletedVideo = await VideoModel.findByIdAndDelete(videoId);
     if (!deletedVideo) {
@@ -24,6 +37,10 @@ export async function DELETE(
 
     return NextResponse.json({ message: 'Video deleted successfully' });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete video' }, { status: 500 });
+    console.error('Error deleting video:', error);
+    return NextResponse.json(
+      { error: 'Failed to delete video', details: error instanceof Error ? error.message : String(error) }, 
+      { status: 500 }
+    );
   }
 } 

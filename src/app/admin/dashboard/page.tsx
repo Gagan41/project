@@ -41,10 +41,34 @@ export default function AdminDashboard() {
   const fetchCourses = async () => {
     try {
       const data = await getData("/api/courses?populate=modules");
-      console.log('Fetched courses:', JSON.stringify(data, null, 2)); // Detailed debug log
-      setCourses(data);
+      console.log('Raw API response:', data); // Debug log
+      
+      if (!data) {
+        console.warn('No courses data received');
+        setCourses([]);
+        return;
+      }
+      
+      if (!Array.isArray(data)) {
+        console.error('Unexpected data format:', data);
+        setCourses([]);
+        return;
+      }
+
+      // Validate and transform the data
+      const validCourses = data.filter(course => {
+        const isValid = course && typeof course === 'object' && '_id' in course;
+        if (!isValid) {
+          console.warn('Invalid course data:', course);
+        }
+        return isValid;
+      });
+
+      console.log('Processed courses:', validCourses); // Debug log
+      setCourses(validCourses);
     } catch (err) {
-      console.error("Failed to fetch courses", err);
+      console.error("Failed to fetch courses:", err);
+      setCourses([]);
     }
   };
 
@@ -66,16 +90,23 @@ export default function AdminDashboard() {
 
   const handleDeleteCourse = async (id: string) => {
     try {
-      const res = await fetch(`/api/courses/${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/courses/${id}`, { 
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      const data = await res.json();
+      
       if (!res.ok) {
-        const text = await res.text();
-        console.error("Delete failed:", res.status, text);
+        console.error("Delete failed:", res.status, data);
         return;
       }
-      await res.json();
+      
       await fetchCourses();
     } catch (err) {
-      console.error("Failed to delete course", err);
+      console.error("Failed to delete course:", err);
     }
   };
 
@@ -102,17 +133,24 @@ export default function AdminDashboard() {
     try {
       const res = await fetch(
         `/api/courses/${selectedCourse._id}/modules/${moduleId}`,
-        { method: "DELETE" }
+        { 
+          method: "DELETE",
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
       );
+      
+      const data = await res.json();
+      
       if (!res.ok) {
-        const text = await res.text();
-        console.error("Delete failed:", res.status, text);
+        console.error("Delete failed:", res.status, data);
         return;
       }
-      await res.json();
+      
       await fetchCourses();
     } catch (err) {
-      console.error("Failed to delete module", err);
+      console.error("Failed to delete module:", err);
     }
   };
 
@@ -146,17 +184,24 @@ export default function AdminDashboard() {
     try {
       const res = await fetch(
         `/api/courses/${selectedCourse._id}/modules/${selectedModule._id}/videos/${videoId}`,
-        { method: "DELETE" }
+        { 
+          method: "DELETE",
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
       );
+      
+      const data = await res.json();
+      
       if (!res.ok) {
-        const text = await res.text();
-        console.error("Delete failed:", res.status, text);
+        console.error("Delete failed:", res.status, data);
         return;
       }
-      await res.json();
+      
       await fetchCourses();
     } catch (err) {
-      console.error("Failed to delete video", err);
+      console.error("Failed to delete video:", err);
     }
   };
 

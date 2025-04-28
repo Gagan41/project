@@ -17,6 +17,7 @@ const VideoSchema = new Schema<VideoDoc>(
   { timestamps: true }
 );
 
+// Ensure the model is registered only once
 let VideoModel: Model<VideoDoc>;
 try {
   VideoModel = mongoose.model<VideoDoc>('Video');
@@ -24,4 +25,4 @@ try {
   VideoModel = mongoose.model<VideoDoc>('Video', VideoSchema);
 }
 
-export default VideoModel; 
+export { VideoModel }; 

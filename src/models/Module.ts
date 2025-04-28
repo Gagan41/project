@@ -17,6 +17,7 @@ const ModuleSchema = new Schema<ModuleDoc>(
   { timestamps: true }
 );
 
+// Ensure the model is registered only once
 let ModuleModel: Model<ModuleDoc>;
 try {
   ModuleModel = mongoose.model<ModuleDoc>('Module');
@@ -24,4 +25,4 @@ try {
   ModuleModel = mongoose.model<ModuleDoc>('Module', ModuleSchema);
 }
 
-export default ModuleModel; 
+export { ModuleModel }; 

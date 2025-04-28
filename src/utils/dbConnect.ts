@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { registerModels } from "@/models";
 
 const MONGODB_URI = process.env.MONGODB_URI!;
 if (!MONGODB_URI) {
@@ -21,16 +22,15 @@ if (!cached) {
 
 export default async function dbConnect() {
   if (cached!.conn) {
-    console.log("MongoDB: using cached connection");
     return cached!.conn;
   }
 
   if (!cached!.promise) {
-    console.log("MongoDB: creating new connection...");
     cached!.promise = mongoose
       .connect(MONGODB_URI)
       .then((mongooseInstance) => {
-        console.log("MongoDB: connected successfully");
+        // Register all models after connection is established
+        registerModels();
         return mongooseInstance;
       })
       .catch((err) => {
@@ -39,6 +39,11 @@ export default async function dbConnect() {
       });
   }
 
-  cached!.conn = await cached!.promise;
-  return cached!.conn;
+  try {
+    cached!.conn = await cached!.promise;
+    return cached!.conn;
+  } catch (error) {
+    console.error("MongoDB: connection error", error);
+    throw error;
+  }
 }
