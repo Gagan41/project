@@ -1,5 +1,5 @@
 import "./globals.css";
-import { AuthProvider } from "../context/AuthContext";
+import Providers from "../components/Providers";
 import Footer from "../components/Footer";
 import LayoutWithNavbar from "../components/LayoutWithNavbar";
 import LayoutWithLifeInfo from "../components/LayoutWithLifeInfo";
@@ -17,14 +17,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className="flex flex-col min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100">
-        <AuthProvider>
+        <Providers>
           <LayoutWithNavbar />
           <main className="flex-grow container mx-auto px-4 py-8">
             {children}
           </main>
           <LayoutWithLifeInfo />
           <Footer />
-        </AuthProvider>
+        </Providers>
       </body>
     </html>
   );

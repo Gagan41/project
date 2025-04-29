@@ -48,3 +48,41 @@ export async function DELETE(
     );
   }
 }
+
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { courseId: string } }
+) {
+  try {
+    await dbConnect();
+    const { courseId } = await params;
+
+    if (!courseId) {
+      return NextResponse.json(
+        { error: 'Course ID is required' }, 
+        { status: 400 }
+      );
+    }
+
+    // Find the course and populate its modules and videos
+    const course = await CourseModel.findById(courseId)
+      .populate({
+        path: 'modules',
+        populate: {
+          path: 'videos'
+        }
+      });
+
+    if (!course) {
+      return NextResponse.json({ error: 'Course not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(course);
+  } catch (error) {
+    console.error('Error fetching course:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch course', details: error instanceof Error ? error.message : String(error) }, 
+      { status: 500 }
+    );
+  }
+}
