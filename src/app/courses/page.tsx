@@ -1,76 +1,81 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from "react"
-import { getData } from "@/utils/api"
-import Link from "next/link"
+import { useEffect, useState } from "react";
+import { getData } from "@/utils/api";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from 'lucide-react'
 
 interface Course {
-  _id: string
-  title: string
-  description: string
-  modules: Module[]
+  _id: string;
+  title: string;
+  description: string;
+  modules: Module[];
 }
 
 interface Module {
-  _id: string
-  title: string
-  description: string
-  videos: Video[]
+  _id: string;
+  title: string;
+  description: string;
+  videos: Video[];
 }
 
 interface Video {
-  _id: string
-  title: string
-  description: string
-  youtubeUrl: string
+  _id: string;
+  title: string;
+  description: string;
+  youtubeUrl: string;
 }
 
 export default function CoursesPage() {
-  const [courses, setCourses] = useState<Course[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        setLoading(true)
-        const data = await getData("/api/courses?populate=modules")
-        
+        setLoading(true);
+        const data = await getData("/api/courses?populate=modules");
+
         if (!data) {
-          setError("No courses found")
-          return
+          setError("No courses found");
+          return;
         }
 
         // Ensure we have an array of courses
         if (!Array.isArray(data)) {
-          setError("Invalid course data format")
-          return
+          setError("Invalid course data format");
+          return;
         }
 
-        setCourses(data)
+        setCourses(data);
       } catch (err) {
-        console.error("Failed to fetch courses:", err)
-        setError("Failed to load courses. Please try again later.")
+        console.error("Failed to fetch courses:", err);
+        setError("Failed to load courses. Please try again later.");
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchCourses()
-  }, [])
+    fetchCourses();
+  }, []);
 
   const getTotalVideos = (course: Course) => {
-    return course.modules?.reduce((total, module) => {
-      return total + (module.videos?.length || 0)
-    }, 0) || 0
-  }
+    return (
+      course.modules?.reduce((total, module) => {
+        return total + (module.videos?.length || 0);
+      }, 0) || 0
+    );
+  };
 
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white">
         <p>Loading courses...</p>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -86,14 +91,21 @@ export default function CoursesPage() {
           </button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-8">
+        <button
+          onClick={() => router.push("/")}
+          className="flex items-center text-sm text-purple-400 hover:text-white transition"
+        >
+          <ArrowLeft className="text-2xl" />
+          <span className="text-lg">Back to Home</span>
+        </button>
         <h1 className="text-3xl font-bold mb-8">Available Courses</h1>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {courses.map((course) => (
             <Link
@@ -114,5 +126,5 @@ export default function CoursesPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

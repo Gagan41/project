@@ -43,11 +43,16 @@ export default function Navbar() {
             <button className="font-semibold text-white hover:text-purple-300 transition">
               Student Wins
             </button>
-            <Link href="/courses">
-              <button className="font-semibold text-white hover:text-purple-300 transition">
-                Courses
-              </button>
-            </Link>
+
+            {/* Conditionally render Courses only if user is logged in */}
+            {user && (
+              <Link href="/course-info">
+                <button className="font-semibold text-white hover:text-purple-300 transition">
+                  Courses
+                </button>
+              </Link>
+            )}
+
             <button className="font-semibold text-white hover:text-purple-300 transition">
               About Us
             </button>
@@ -147,9 +152,16 @@ export default function Navbar() {
               <button className="text-center font-semibold text-white hover:text-purple-300 transition">
                 Student Wins
               </button>
-              <button className="text-center font-semibold text-white hover:text-purple-300 transition">
-                Courses
-              </button>
+
+              {/* Conditionally render Courses only if user is logged in */}
+              {user && (
+                <Link href="/course-info">
+                  <button className="text-center font-semibold text-white hover:text-purple-300 transition">
+                    Courses
+                  </button>
+                </Link>
+              )}
+
               <button className="text-center font-semibold text-white hover:text-purple-300 transition">
                 About Us
               </button>

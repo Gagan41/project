@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { AuthContext } from '../../context/AuthContext'
 import { postData } from '../../utils/api'
+import toast, { Toaster } from 'react-hot-toast'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -14,13 +15,26 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const { token } = await postData('/api/auth/login', { email, password })
-    login(token)
-    router.push('/')
+    try {
+      const { token } = await postData('/api/auth/login', { email, password })
+
+      if (!token) {
+        toast.error('Invalid credentials. Please try again.')
+        return
+      }
+
+      login(token)
+      router.push('/course-info')
+    } catch (error) {
+      toast.error('Invalid email or password. Please try again.')
+      console.error('Login error:', error)
+    }
   }
 
   return (
     <div className="min-h-screen w-screen flex items-center justify-center px-4 text-white overflow-hidden">
+      <Toaster position="top-center" reverseOrder={false} /> {/* Toast UI */}
+
       <div className="w-full max-w-md space-y-6">
         {/* Back Button */}
         <button

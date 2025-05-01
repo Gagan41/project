@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { getData } from "@/utils/api";
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter } from "next/navigation";
+import { ArrowLeft } from 'lucide-react'
 
 interface Course {
   _id: string;
@@ -45,7 +46,7 @@ export default function CoursePage() {
         }
 
         setCourse(data);
-        
+
         if (data.modules && data.modules.length > 0) {
           setSelectedModule(data.modules[0]);
           if (data.modules[0].videos && data.modules[0].videos.length > 0) {
@@ -63,9 +64,10 @@ export default function CoursePage() {
 
   const extractVideoId = (url: string) => {
     if (!url) return null;
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const regExp =
+      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
+    return match && match[2].length === 11 ? match[2] : null;
   };
 
   if (error) {
@@ -95,13 +97,22 @@ export default function CoursePage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-8">
+        <button
+          onClick={() => router.push("/courses")}
+          className="flex items-center text-sm text-purple-400 hover:text-white transition"
+        >
+          <ArrowLeft className="text-2xl" />
+          <span className="text-lg">Back to Courses</span>
+        </button>
         <h1 className="text-3xl font-bold mb-4">{course.title}</h1>
         <p className="text-gray-300 mb-8">{course.description}</p>
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar with modules */}
           <div className="w-full lg:w-1/4 bg-gray-800 rounded-lg p-4 h-[calc(100vh-200px)] overflow-y-auto">
-            <h2 className="text-xl font-semibold mb-4 sticky top-0 bg-gray-800 py-2">Modules</h2>
+            <h2 className="text-xl font-semibold mb-4 sticky top-0 bg-gray-800 py-2">
+              Modules
+            </h2>
             <div className="space-y-2">
               {course.modules?.map((module) => (
                 <button
@@ -126,7 +137,9 @@ export default function CoursePage() {
                       {module.videos?.length || 0} videos
                     </span>
                   </div>
-                  <p className="text-sm text-gray-300 mt-1">{module.description}</p>
+                  <p className="text-sm text-gray-300 mt-1">
+                    {module.description}
+                  </p>
                 </button>
               ))}
             </div>
@@ -139,7 +152,9 @@ export default function CoursePage() {
                 <h2 className="text-2xl font-semibold mb-4">
                   {selectedModule.title}
                 </h2>
-                <p className="text-gray-300 mb-6">{selectedModule.description}</p>
+                <p className="text-gray-300 mb-6">
+                  {selectedModule.description}
+                </p>
 
                 {/* Video list */}
                 <div className="space-y-4 mb-8">
@@ -162,19 +177,23 @@ export default function CoursePage() {
                 {/* Video player */}
                 {selectedVideo && (
                   <div className="mt-8">
-                    <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg">
-                      <iframe
-                        src={`https://www.youtube.com/embed/${extractVideoId(selectedVideo.youtubeUrl)}`}
-                        title={selectedVideo.title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className="absolute top-0 left-0 w-full h-full"
-                      />
+                    <div className="w-full max-w-[640px] mx-auto">
+                      <div className="relative w-full h-0 pb-[56.25%] rounded-lg overflow-hidden">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${extractVideoId(selectedVideo.youtubeUrl)}?modestbranding=1&rel=0`}
+                          title={selectedVideo.title}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          className="absolute top-0 left-0 w-full h-full"
+                        />
+                      </div>
+                      <h3 className="text-xl font-semibold mt-4 text-center">
+                        {selectedVideo.title}
+                      </h3>
+                      <p className="text-gray-300 mt-2 text-center">
+                        {selectedVideo.description}
+                      </p>
                     </div>
-                    <h3 className="text-xl font-semibold mt-4">
-                      {selectedVideo.title}
-                    </h3>
-                    <p className="text-gray-300 mt-2">{selectedVideo.description}</p>
                   </div>
                 )}
               </div>
