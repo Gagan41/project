@@ -13,7 +13,7 @@ export async function getData(url: string, token?: string) {
     const res = await fetch(url, {
       method: "GET",
       headers,
-      cache: 'no-store' // Disable caching to always get fresh data
+      cache: "no-store", // Disable caching to always get fresh data
     });
 
     if (process.env.NODE_ENV === "development") {
@@ -21,7 +21,7 @@ export async function getData(url: string, token?: string) {
     }
 
     const text = await res.text();
-    
+
     if (process.env.NODE_ENV === "development") {
       console.log(`[getData] ${url} raw response:`, text);
     }
@@ -34,17 +34,17 @@ export async function getData(url: string, token?: string) {
 
     try {
       const json = JSON.parse(text);
-      
+
       if (!res.ok) {
         const error = json.error || `Request failed with status ${res.status}`;
         console.error(`[getData] ${url} failed:`, error);
         throw new Error(error);
       }
-      
+
       return json;
     } catch (e) {
       console.error(`[getData] Failed to parse JSON response:`, e);
-      throw new Error('Invalid JSON response');
+      throw new Error("Invalid JSON response");
     }
   } catch (error) {
     console.error(`[getData] ${url} request failed:`, error);
@@ -69,29 +69,26 @@ export async function postData(url: string, data: any, token?: string) {
     });
 
     const text = await res.text();
-    
+
     // Handle empty response
     if (!text) {
-      console.error(`[postData] ${url} returned empty response`);
-      return null;
+      throw new Error("Empty response from server");
     }
 
     try {
       const json = JSON.parse(text);
-      
+
       if (!res.ok) {
-        const error = json.error || `Request failed with status ${res.status}`;
-        console.error(`[postData] ${url} failed:`, error);
-        throw new Error(error);
+        throw new Error(
+          json.error || `Request failed with status ${res.status}`
+        );
       }
-      
+
       return json;
     } catch (e) {
-      console.error(`[postData] Failed to parse JSON response:`, e);
-      throw new Error('Invalid JSON response');
+      throw new Error("Invalid response from server");
     }
   } catch (error) {
-    console.error(`[postData] ${url} request failed:`, error);
     throw error;
   }
 }
