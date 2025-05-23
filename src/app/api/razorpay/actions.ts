@@ -18,11 +18,19 @@ export type RazorpayResponseType = {
   razorpay_signature: string;
 };
 
+// Base prices in rupees
 const PLAN_PRICES = {
-  "one-time": 2999,
-  "3-month": 1199,
-  monthly: 499,
+  "one-time": 2999.0,
+  "3-month": 1199.0,
+  monthly: 499.0,
 };
+
+// Function to ensure last decimal is 0
+function adjustAmount(amount: number): number {
+  // Convert to paise and ensure last digit is 0
+  const amountInPaise = Math.floor(amount * 100);
+  return amountInPaise - (amountInPaise % 10);
+}
 
 export async function createPaymentOrder(
   plan: "one-time" | "3-month" | "monthly",
@@ -47,9 +55,11 @@ export async function createPaymentOrder(
 
   await dbConnect();
 
-  const amount = PLAN_PRICES[plan];
+  const baseAmount = PLAN_PRICES[plan];
+  const adjustedAmount = adjustAmount(baseAmount);
+
   const options = {
-    amount: amount * 100, // Razorpay expects amount in paise
+    amount: adjustedAmount, // Already in paise with last digit as 0
     currency: "INR",
     receipt: `receipt_${Date.now()}`,
   };
@@ -58,9 +68,9 @@ export async function createPaymentOrder(
 
   // Create payment record with explicit userId
   const payment = await Payment.create({
-    userId: userData._id.toString(), // Ensure userId is a string
+    userId: userData._id.toString(),
     plan,
-    amount,
+    amount: baseAmount, // Store original amount
     orderId: order.id,
     status: "pending",
   });
@@ -69,7 +79,7 @@ export async function createPaymentOrder(
     orderId: order.id,
     amount: order.amount,
     key: process.env.RAZORPAY_KEY_ID,
-    paymentId: payment._id.toString(), // Convert ObjectId to string
+    paymentId: payment._id.toString(),
   };
 }
 

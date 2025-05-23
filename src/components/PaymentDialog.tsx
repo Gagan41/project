@@ -104,7 +104,8 @@ const PaymentDialog: React.FC = () => {
           email: user.email,
         },
         theme: {
-          color: "#8B5CF6",
+          color: "#10B981",
+          backdrop_color: "#ECFDF5",
         },
       };
 
