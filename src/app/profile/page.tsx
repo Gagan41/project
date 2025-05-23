@@ -59,14 +59,14 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-gray-900 text-gray-100">
+      <div className="h-screen flex items-center justify-center bg-black text-gray-100">
         <p>Loading…</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-black text-gray-100 flex items-center justify-center px-4 py-8">
       <ToasterClient />
       <form
         onSubmit={handleUpdate}

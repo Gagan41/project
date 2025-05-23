@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { getData } from "@/utils/api";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft } from "lucide-react";
 
 interface Course {
   _id: string;
@@ -95,7 +95,7 @@ export default function CoursePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-black text-white">
       <div className="container mx-auto px-4 py-8">
         <button
           onClick={() => router.push("/courses")}
@@ -109,7 +109,7 @@ export default function CoursePage() {
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar with modules */}
-          <div className="w-full lg:w-1/4 bg-gray-800 rounded-lg p-4 h-[calc(100vh-200px)] overflow-y-auto">
+          <div className="w-full lg:w-1/4 bg-black rounded-lg p-4 h-[calc(100vh-200px)] overflow-y-auto">
             <h2 className="text-xl font-semibold mb-4 sticky top-0 bg-gray-800 py-2">
               Modules
             </h2>
@@ -148,7 +148,7 @@ export default function CoursePage() {
           {/* Main content area */}
           <div className="w-full lg:w-3/4">
             {selectedModule ? (
-              <div className="bg-gray-800 rounded-lg p-6">
+              <div className="bg-black rounded-lg p-6">
                 <h2 className="text-2xl font-semibold mb-4">
                   {selectedModule.title}
                 </h2>

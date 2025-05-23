@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getData } from "@/utils/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft } from "lucide-react";
 
 interface Course {
   _id: string;
@@ -95,7 +95,7 @@ export default function CoursesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-black text-white">
       <div className="container mx-auto px-4 py-8">
         <button
           onClick={() => router.push("/")}

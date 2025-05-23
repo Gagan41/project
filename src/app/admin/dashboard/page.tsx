@@ -206,7 +206,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col p-6 text-white gap-8">
+    <div className="min-h-screen bg-black flex flex-col p-6 text-white gap-8">
       <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-xl space-y-6">
         <h1 className="text-2xl font-bold text-center">Add New Course</h1>
         <input

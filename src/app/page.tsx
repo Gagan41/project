@@ -28,7 +28,7 @@ export default function Page() {
   }, [pathname])
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-gray-100 px-4 sm:px-6 py-12 scroll-smooth">
+    <main className="min-h-screen bg-black text-gray-100 px-4 sm:px-6 py-12 scroll-smooth">
       {/* Hero Section */}
       <section className="max-w-4xl mx-auto text-center space-y-8">
         <h1 className="text-4xl sm:text-5xl font-extrabold text-purple-400 leading-tight text-balance">

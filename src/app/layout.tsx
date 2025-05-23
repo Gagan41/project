@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="flex flex-col min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100">
+      <body className="flex flex-col min-h-screen bg-black text-gray-100">
         <Providers>
           <LayoutWithNavbar />
           <main className="flex-grow container mx-auto px-4 py-8">

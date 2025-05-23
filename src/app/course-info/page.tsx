@@ -5,7 +5,7 @@ export default function CourseInfoPage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white px-4 py-10">
+    <div className="min-h-screen bg-black text-white px-4 py-10">
       <div className="max-w-3xl mx-auto">
         <button
           onClick={() => router.push("/")}
@@ -22,15 +22,17 @@ export default function CourseInfoPage() {
         <p className="text-gray-300 text-lg mb-6 leading-relaxed">
           This course is designed to transform your English speaking abilities,
           boost your confidence, and sharpen your communication skills — whether
-          you're preparing for a job interview, aiming to ace public speaking, or
-          simply want to speak English with fluency and finesse.
+          you're preparing for a job interview, aiming to ace public speaking,
+          or simply want to speak English with fluency and finesse.
         </p>
 
         <h2 className="text-2xl font-semibold text-purple-300 mb-4">
           What You'll Learn:
         </h2>
         <ul className="list-disc pl-6 space-y-2 text-gray-200">
-          <li>Build fluency through real-life conversations and speaking drills</li>
+          <li>
+            Build fluency through real-life conversations and speaking drills
+          </li>
           <li>Master body language, tone, and professional etiquette</li>
           <li>Eliminate hesitation and nervousness while speaking</li>
           <li>Improve pronunciation and vocabulary usage</li>
@@ -50,7 +52,8 @@ export default function CourseInfoPage() {
           Duration & Format
         </h2>
         <p className="text-gray-300 leading-relaxed">
-          📅 6 Weeks | 🎥 Video Modules | 📝 Practical Assignments | 🎤 Live Sessions
+          📅 6 Weeks | 🎥 Video Modules | 📝 Practical Assignments | 🎤 Live
+          Sessions
         </p>
 
         <div className="mt-10 text-center">
