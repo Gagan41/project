@@ -66,8 +66,10 @@ export default function RegisterPage() {
         password,
       });
       login(token);
-      toast.success("Registration successful!");
-      router.push("/");
+      toast.success(
+        "Registration successful! Please select a plan to continue."
+      );
+      router.push("/payment");
     } catch (err: any) {
       toast.error(err.message || "Registration failed");
     }

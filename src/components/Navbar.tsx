@@ -30,7 +30,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center gap-8">
             <button
               onClick={scrollToFeatures}
               className="font-semibold text-white hover:text-purple-300 transition"
@@ -46,7 +46,7 @@ export default function Navbar() {
 
             {/* Conditionally render Courses only if user is logged in */}
             {user && (
-              <Link href="/course-info">
+              <Link href="/course-info" prefetch={false}>
                 <button className="font-semibold text-white hover:text-purple-300 transition">
                   Courses
                 </button>
@@ -67,7 +67,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center gap-4">
             {user ? (
               <>
                 <Link href="/profile">
@@ -149,13 +149,10 @@ export default function Navbar() {
               <button className="text-center font-semibold text-white hover:text-purple-300 transition">
                 Interviews
               </button>
-              <button className="text-center font-semibold text-white hover:text-purple-300 transition">
-                Student Wins
-              </button>
 
               {/* Conditionally render Courses only if user is logged in */}
               {user && (
-                <Link href="/course-info">
+                <Link href="/course-info" prefetch={false}>
                   <button className="text-center font-semibold text-white hover:text-purple-300 transition">
                     Courses
                   </button>
