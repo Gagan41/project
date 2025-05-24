@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Check, Zap } from "lucide-react";
 import Script from "next/script";
 import {
   createPaymentOrder,
@@ -11,6 +11,7 @@ import {
 import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 
 interface PricingCardProps {
   title: string;
@@ -32,34 +33,51 @@ const PricingCard: React.FC<PricingCardProps> = ({
   onPurchase,
 }) => {
   return (
-    <div
-      className={`relative p-6 rounded-xl border ${
-        isPopular
-          ? "border-purple-500 bg-gray-800"
-          : "border-gray-700 bg-gray-800"
-      }`}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="relative group"
     >
-      {isPopular && (
-        <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-          <span className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm">
-            Most Popular
-          </span>
-        </div>
-      )}
-      <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
-      <p className="text-gray-400 mb-4">{description}</p>
-      <div className="text-3xl font-bold text-white mb-6">{price}</div>
-      <button
-        onClick={() => onPurchase(plan)}
-        className={`w-full py-3 rounded-md font-medium transition-colors ${
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
+      <div
+        className={`relative p-8 rounded-xl border ${
           isPopular
-            ? "bg-purple-600 text-white hover:bg-purple-700"
-            : "bg-gray-700 text-white hover:bg-gray-600"
+            ? "border-purple-500/50 bg-gray-900/80 backdrop-blur-xl"
+            : "border-gray-700/50 bg-gray-900/80 backdrop-blur-xl"
         }`}
       >
-        {buttonText}
-      </button>
-    </div>
+        {isPopular && (
+          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+            <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-1.5 rounded-full text-sm font-medium shadow-lg shadow-purple-500/25">
+              Most Popular
+            </span>
+          </div>
+        )}
+        <div className="space-y-4">
+          <h3 className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            {title}
+          </h3>
+          <p className="text-gray-400 text-lg">{description}</p>
+          <div className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            {price}
+          </div>
+          <button
+            onClick={() => onPurchase(plan)}
+            className={`w-full py-4 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 ${
+              isPopular
+                ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg hover:shadow-purple-500/25"
+                : "bg-gray-800 text-white hover:bg-gray-700 hover:shadow-lg hover:shadow-gray-500/25"
+            }`}
+          >
+            <span className="flex items-center justify-center gap-2">
+              {buttonText}
+              <Zap className="w-4 h-4" />
+            </span>
+          </button>
+        </div>
+      </div>
+    </motion.div>
   );
 };
 
@@ -118,55 +136,94 @@ const PaymentDialog: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
-      <div className="bg-gray-900 rounded-xl p-6 max-w-4xl w-full">
-        {/* Back Button */}
-        <button
-          onClick={() => router.push("/")}
-          className="flex items-center text-sm text-purple-400 hover:text-white transition mb-6"
-        >
-          <ArrowLeft className="mr-1 h-4 w-4" />
-          Back to Home
-        </button>
-
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-white mb-2">
-            Choose Your Plan
-          </h2>
-          <p className="text-gray-400">
-            Select the plan that best fits your needs
-          </p>
+      <div className="relative max-w-5xl w-full">
+        {/* Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(147,51,234,0.1),transparent_50%)]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-purple-500/10 blur-3xl" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <PricingCard
-            title="One-Time Purchase"
-            description="Pay once and access the course forever."
-            price="₹2,999"
-            buttonText="Get Started"
-            plan="one-time"
-            onPurchase={handlePurchase}
-          />
+        <div className="relative bg-gray-900/80 backdrop-blur-xl rounded-2xl border border-purple-500/20 shadow-2xl p-8">
+          {/* Back Button */}
+          <motion.button
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            onClick={() => router.push("/")}
+            className="flex items-center text-cyan-400 hover:text-white transition-colors duration-300 mb-8"
+          >
+            <ArrowLeft className="mr-2 h-5 w-5" />
+            <span className="text-lg">Back to Home</span>
+          </motion.button>
 
-          <PricingCard
-            title="3-Month Access"
-            description="Access the course for 3 months."
-            price="₹1,199"
-            buttonText="Get Started"
-            isPopular={true}
-            plan="3-month"
-            onPurchase={handlePurchase}
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Choose Your Plan
+            </h2>
+            <p className="text-xl text-gray-300">
+              Select the plan that best fits your needs
+            </p>
+          </motion.div>
 
-          <PricingCard
-            title="Monthly Access"
-            description="Cancel anytime. Billed monthly."
-            price="₹499/mo"
-            buttonText="Get Started"
-            plan="monthly"
-            onPurchase={handlePurchase}
-          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <PricingCard
+              title="One-Time Purchase"
+              description="Pay once and access the course forever."
+              price="₹2,999"
+              buttonText="Get Started"
+              plan="one-time"
+              onPurchase={handlePurchase}
+            />
+
+            <PricingCard
+              title="3-Month Access"
+              description="Access the course for 3 months."
+              price="₹1,199"
+              buttonText="Get Started"
+              isPopular={true}
+              plan="3-month"
+              onPurchase={handlePurchase}
+            />
+
+            <PricingCard
+              title="Monthly Access"
+              description="Cancel anytime. Billed monthly."
+              price="₹499/mo"
+              buttonText="Get Started"
+              plan="monthly"
+              onPurchase={handlePurchase}
+            />
+          </div>
+
+          {/* Trust Indicators */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-12 text-center"
+          >
+            <div className="flex flex-wrap justify-center gap-8 text-gray-400">
+              <div className="flex items-center gap-2">
+                <Check className="w-5 h-5 text-purple-400" />
+                <span>Secure Payment</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="w-5 h-5 text-purple-400" />
+                <span>30-Day Money Back</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="w-5 h-5 text-purple-400" />
+                <span>Instant Access</span>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </div>

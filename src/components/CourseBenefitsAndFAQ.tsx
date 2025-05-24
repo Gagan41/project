@@ -28,6 +28,28 @@ const benefits = [
       "Get guidance on job applications, interviews, and career growth.",
     icon: "💼",
   },
+  {
+    title: "Lifetime Access",
+    description: "Access course materials and updates even after completion.",
+    icon: "🔑",
+  },
+  {
+    title: "Community Network",
+    description:
+      "Join a community of learners and professionals for networking.",
+    icon: "👥",
+  },
+  {
+    title: "Flexible Learning",
+    description: "Learn at your own pace with 24/7 access to course materials.",
+    icon: "⏰",
+  },
+  {
+    title: "Regular Updates",
+    description:
+      "Stay current with industry trends through regular content updates.",
+    icon: "🔄",
+  },
 ];
 
 const faqs = [
@@ -50,6 +72,16 @@ const faqs = [
     question: "Is there a certificate?",
     answer:
       "Yes, you'll receive a certificate upon successful completion of the course.",
+  },
+  {
+    question: "How much time should I dedicate weekly?",
+    answer:
+      "We recommend dedicating 6-8 hours per week to get the most out of the course. However, you can adjust this based on your schedule.",
+  },
+  {
+    question: "What support is available if I get stuck?",
+    answer:
+      "You'll have access to our support team, community forums, and regular office hours with instructors to help you overcome any challenges.",
   },
 ];
 

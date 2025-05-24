@@ -20,12 +20,15 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-md px-6 py-4 text-white">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-black/80 via-purple-900/20 to-black/80 backdrop-blur-2xl border-b border-cyan-500/20 px-6 py-4 text-white">
         <div className="flex items-center justify-between max-w-7xl mx-auto w-full">
           {/* Logo */}
           <Link href="/">
-            <span className="text-2xl font-bold text-purple-400 hover:text-purple-300 cursor-pointer">
-              CourseSite
+            <span className="text-2xl font-bold relative group cursor-pointer">
+              <span className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000"></span>
+              <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 group-hover:from-cyan-300 group-hover:to-purple-300 transition duration-300">
+                CourseSite
+              </span>
             </span>
           </Link>
 
@@ -33,34 +36,40 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-8">
             <button
               onClick={scrollToFeatures}
-              className="font-semibold text-white hover:text-purple-300 transition"
+              className="relative font-medium text-white/90 hover:text-cyan-300 transition-all duration-300 group"
             >
-              Features
+              <span className="relative z-10">Features</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all duration-300"></span>
             </button>
-            <button className="font-semibold text-white hover:text-purple-300 transition">
-              Interviews
+            <button className="relative font-medium text-white/90 hover:text-cyan-300 transition-all duration-300 group">
+              <span className="relative z-10">Interviews</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all duration-300"></span>
             </button>
-            <button className="font-semibold text-white hover:text-purple-300 transition">
-              Student Wins
+            <button className="relative font-medium text-white/90 hover:text-cyan-300 transition-all duration-300 group">
+              <span className="relative z-10">Student Wins</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all duration-300"></span>
             </button>
 
             {/* Conditionally render Courses only if user is logged in */}
             {user && (
               <Link href="/course-info" prefetch={false}>
-                <button className="font-semibold text-white hover:text-purple-300 transition">
-                  Courses
+                <button className="relative font-medium text-white/90 hover:text-cyan-300 transition-all duration-300 group">
+                  <span className="relative z-10">Courses</span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all duration-300"></span>
                 </button>
               </Link>
             )}
 
-            <button className="font-semibold text-white hover:text-purple-300 transition">
-              About Us
+            <button className="relative font-medium text-white/90 hover:text-cyan-300 transition-all duration-300 group">
+              <span className="relative z-10">About Us</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all duration-300"></span>
             </button>
 
             {user?.role === "admin" && (
               <Link href="/admin/dashboard">
-                <button className="font-semibold text-purple-400 hover:text-white transition">
-                  Admin Dashboard
+                <button className="relative font-medium text-cyan-400 hover:text-white transition-all duration-300 group">
+                  <span className="relative z-10">Admin Dashboard</span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
                 </button>
               </Link>
             )}
@@ -71,13 +80,13 @@ export default function Navbar() {
             {user ? (
               <>
                 <Link href="/profile">
-                  <button className="p-2 rounded hover:bg-gray-700 transition">
-                    <User className="w-6 h-6 text-purple-300" />
+                  <button className="p-2 rounded-full hover:bg-purple-500/20 transition-all duration-300 group">
+                    <User className="w-6 h-6 text-purple-300 group-hover:text-white" />
                   </button>
                 </Link>
                 <button
                   onClick={logout}
-                  className="px-4 py-2 rounded border border-purple-400 text-purple-400 hover:bg-purple-600 hover:text-white transition"
+                  className="group relative inline-flex items-center justify-center px-6 py-2 text-base font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg overflow-hidden transition-all duration-300 hover:from-purple-700 hover:to-pink-700 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
                 >
                   Logout
                 </button>
@@ -85,12 +94,12 @@ export default function Navbar() {
             ) : (
               <>
                 <Link href="/login-portal">
-                  <button className="px-4 py-2 rounded border border-purple-400 text-purple-400 hover:bg-purple-600 hover:text-white transition">
+                  <button className="group relative inline-flex items-center justify-center px-6 py-2 text-base font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg overflow-hidden transition-all duration-300 hover:from-purple-700 hover:to-pink-700 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25">
                     Log in
                   </button>
                 </Link>
                 <Link href="/register">
-                  <button className="px-4 py-2 rounded bg-purple-600 text-white hover:bg-purple-700 transition">
+                  <button className="group relative inline-flex items-center justify-center px-6 py-2 text-base font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg overflow-hidden transition-all duration-300 hover:from-purple-700 hover:to-pink-700 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25">
                     Join Now
                   </button>
                 </Link>
@@ -100,11 +109,14 @@ export default function Navbar() {
 
           {/* Mobile Hamburger */}
           <div className="md:hidden">
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 rounded-lg hover:bg-cyan-500/20 transition-all duration-300 group"
+            >
               {isMenuOpen ? (
-                <X className="w-6 h-6 text-white" />
+                <X className="w-6 h-6 text-cyan-300 group-hover:text-white" />
               ) : (
-                <Menu className="w-6 h-6 text-white" />
+                <Menu className="w-6 h-6 text-cyan-300 group-hover:text-white" />
               )}
             </button>
           </div>
@@ -117,7 +129,7 @@ export default function Navbar() {
           <>
             {/* Backdrop */}
             <motion.div
-              className="fixed inset-0 bg-black/50 z-40"
+              className="fixed inset-0 bg-black/80 backdrop-blur-xl z-40"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -126,61 +138,67 @@ export default function Navbar() {
 
             {/* Drawer */}
             <motion.div
-              className="fixed top-0 right-0 w-full bg-gray-900 z-50 p-6 flex flex-col items-center gap-6 shadow-lg rounded-b-2xl"
+              className="fixed top-0 right-0 w-full max-w-sm bg-gradient-to-b from-black/95 to-purple-900/20 backdrop-blur-2xl z-50 p-6 flex flex-col items-center gap-6 shadow-2xl border-l border-cyan-500/20"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.3 }}
+              transition={{ type: "spring", damping: 20, stiffness: 300 }}
             >
               {/* Close Button */}
               <button
                 onClick={() => setIsMenuOpen(false)}
-                className="absolute top-6 right-6"
+                className="absolute top-6 right-6 p-2 rounded-lg hover:bg-cyan-500/20 transition-all duration-300 group"
               >
-                <X className="w-6 h-6 text-white" />
+                <X className="w-6 h-6 text-cyan-300 group-hover:text-white" />
               </button>
 
               <button
                 onClick={scrollToFeatures}
-                className="text-center font-semibold text-purple-400 hover:text-white transition"
+                className="w-full text-center font-medium text-cyan-400 hover:text-white transition-all duration-300 group"
               >
-                Features
+                <span className="relative z-10">Features</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
               </button>
-              <button className="text-center font-semibold text-white hover:text-purple-300 transition">
-                Interviews
+              <button className="w-full text-center font-medium text-white/90 hover:text-cyan-300 transition-all duration-300 group">
+                <span className="relative z-10">Interviews</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all duration-300"></span>
               </button>
 
               {/* Conditionally render Courses only if user is logged in */}
               {user && (
                 <Link href="/course-info" prefetch={false}>
-                  <button className="text-center font-semibold text-white hover:text-purple-300 transition">
-                    Courses
+                  <button className="w-full text-center font-medium text-white/90 hover:text-cyan-300 transition-all duration-300 group">
+                    <span className="relative z-10">Courses</span>
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all duration-300"></span>
                   </button>
                 </Link>
               )}
 
-              <button className="text-center font-semibold text-white hover:text-purple-300 transition">
-                About Us
+              <button className="w-full text-center font-medium text-white/90 hover:text-cyan-300 transition-all duration-300 group">
+                <span className="relative z-10">About Us</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all duration-300"></span>
               </button>
 
               {user?.role === "admin" && (
                 <Link href="/admin/dashboard">
-                  <button className="text-center font-semibold text-purple-400 hover:text-white transition">
-                    Admin Dashboard
+                  <button className="w-full text-center font-medium text-cyan-400 hover:text-white transition-all duration-300 group">
+                    <span className="relative z-10">Admin Dashboard</span>
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
                   </button>
                 </Link>
               )}
 
+              {/* Mobile Menu Buttons */}
               {user ? (
                 <>
                   <Link href="/profile">
-                    <button className="p-2 rounded hover:bg-gray-700 transition">
-                      <User className="w-6 h-6 text-purple-300" />
+                    <button className="p-2 rounded-full hover:bg-purple-500/20 transition-all duration-300 group">
+                      <User className="w-6 h-6 text-purple-300 group-hover:text-white" />
                     </button>
                   </Link>
                   <button
                     onClick={logout}
-                    className="mt-4 px-6 py-2 bg-gray-700 rounded hover:bg-gray-600 transition"
+                    className="w-full group relative inline-flex items-center justify-center px-6 py-2 text-base font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg overflow-hidden transition-all duration-300 hover:from-purple-700 hover:to-pink-700 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
                   >
                     Logout
                   </button>
@@ -188,12 +206,12 @@ export default function Navbar() {
               ) : (
                 <div className="flex flex-col gap-3 mt-4 w-full items-center">
                   <Link href="/login-portal">
-                    <button className="px-25 py-2 rounded border border-purple-400 font-semibold text-purple-400 hover:bg-purple-600 hover:text-white transition">
+                    <button className="w-full group relative inline-flex items-center justify-center px-6 py-2 text-base font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg overflow-hidden transition-all duration-300 hover:from-purple-700 hover:to-pink-700 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25">
                       Login
                     </button>
                   </Link>
                   <Link href="/register">
-                    <button className="px-25 py-2 bg-purple-600 rounded hover:bg-purple-700 transition">
+                    <button className="w-full group relative inline-flex items-center justify-center px-6 py-2 text-base font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg overflow-hidden transition-all duration-300 hover:from-purple-700 hover:to-pink-700 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25">
                       Join Now
                     </button>
                   </Link>

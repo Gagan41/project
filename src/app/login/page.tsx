@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { AuthContext } from "../../context/AuthContext";
 import { postData } from "../../utils/api";
 import toast, { Toaster } from "react-hot-toast";
+import { motion } from "framer-motion";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -38,69 +39,117 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-screen flex items-center justify-center px-4 text-white overflow-hidden">
+    <div className="min-h-screen w-screen flex items-center justify-center px-4 text-white overflow-hidden relative">
       <Toaster position="top-center" />
 
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-4 bg-gray-800 p-6 rounded-xl shadow-lg"
+      {/* Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(147,51,234,0.1),transparent_50%)]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-purple-500/10 blur-3xl" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,#4f46e5,#7c3aed,#ec4899)] opacity-5 mix-blend-overlay" />
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="relative z-10 w-full max-w-md"
       >
-        {/* Back Button */}
-        <button
-          type="button"
-          onClick={() => router.push("/")}
-          className="flex items-center text-sm text-purple-400 hover:text-white transition"
-        >
-          <ArrowLeft className="mr-1 h-4 w-4" />
-          Back to Home
-        </button>
-        <h2 className="text-3xl font-bold text-center">Login</h2>
-
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          disabled={isLoading}
-          className="w-full p-3 rounded bg-gray-700 text-gray-100 focus:outline-purple-400 disabled:opacity-50"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          disabled={isLoading}
-          className="w-full p-3 rounded bg-gray-700 text-gray-100 focus:outline-purple-400 disabled:opacity-50"
-        />
-
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full py-3 bg-purple-600 hover:bg-purple-700 rounded transition text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isLoading ? "Logging in..." : "Login"}
-        </button>
-
-        <div className="text-sm text-center space-y-2">
-          <p className="text-gray-400">
-            Don't have an account?{" "}
-            <Link href="/register" className="text-purple-400 hover:underline">
-              Register here
-            </Link>
-          </p>
-          <p className="text-gray-400">
-            Forgot your password?{" "}
-            <Link
-              href="/reset-password"
-              className="text-purple-400 hover:underline"
+        <div className="relative">
+          {/* Glass Card Effect */}
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
+          <div className="relative bg-gray-900/80 backdrop-blur-xl rounded-xl border border-cyan-500/20 shadow-2xl p-8">
+            {/* Back Button */}
+            <motion.button
+              whileHover={{ x: -5 }}
+              onClick={() => router.push("/")}
+              className="absolute top-6 left-6 text-cyan-400 hover:text-white transition-colors duration-300"
             >
-              Reset it here
-            </Link>
-          </p>
+              <ArrowLeft className="w-6 h-6" />
+            </motion.button>
+
+            {/* Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="text-center mb-8"
+            >
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                Welcome Back
+              </h2>
+              <p className="text-gray-400 mt-2">
+                Sign in to continue your journey
+              </p>
+            </motion.div>
+
+            {/* Form */}
+            <motion.form
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              onSubmit={handleSubmit}
+              className="space-y-6"
+            >
+              <div className="space-y-2">
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  className="w-full p-3 rounded-lg bg-gray-800/50 border border-cyan-500/20 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-transparent transition-all duration-300 disabled:opacity-50"
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  className="w-full p-3 rounded-lg bg-gray-800/50 border border-cyan-500/20 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-transparent transition-all duration-300 disabled:opacity-50"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full group relative inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg overflow-hidden transition-all duration-300 hover:from-purple-700 hover:to-pink-700 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? "Logging in..." : "Login"}
+              </button>
+            </motion.form>
+
+            {/* Links */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              className="mt-6 text-center space-y-3"
+            >
+              <p className="text-sm text-gray-400">
+                Don't have an account?{" "}
+                <Link
+                  href="/register"
+                  className="text-cyan-400 hover:text-white transition-colors duration-300"
+                >
+                  Register here
+                </Link>
+              </p>
+              <p className="text-sm text-gray-400">
+                Forgot your password?{" "}
+                <Link
+                  href="/reset-password"
+                  className="text-cyan-400 hover:text-white transition-colors duration-300"
+                >
+                  Reset it here
+                </Link>
+              </p>
+            </motion.div>
+          </div>
         </div>
-      </form>
+      </motion.div>
     </div>
   );
 }

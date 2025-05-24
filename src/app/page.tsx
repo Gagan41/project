@@ -32,7 +32,7 @@ export default function Page() {
   }, [pathname]);
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black text-gray-100 scroll-smooth">
+    <main className="min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black text-gray-100 scroll-smooth relative">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 py-20 overflow-hidden">
         {/* Background Elements */}
@@ -68,14 +68,18 @@ export default function Page() {
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10" />
             <iframe
               className="w-full h-full"
-              src={course.videoUrl.replace(
+              src={`${course.videoUrl.replace(
                 "youtu.be/",
                 "www.youtube.com/embed/"
-              )}
+              )}?modestbranding=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(
+                typeof window !== "undefined" ? window.location.origin : ""
+              )}`}
               title="Intro Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
             />
           </motion.div>
 
@@ -100,7 +104,7 @@ export default function Page() {
 
       {/* Features Section */}
       <section id="features" className="relative py-20 px-4 sm:px-6">
-        <div className="max-w-5xl mx-auto space-y-12">
+        <div className="max-w-5xl mx-auto space-y-12 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -164,7 +168,8 @@ export default function Page() {
                     className="inline-block mt-2"
                   >
                     <strong className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                      Gain insights directly from elite communicators who'll guide you step-by-step.
+                      Gain insights directly from elite communicators who'll
+                      guide you step-by-step.
                     </strong>
                   </motion.span>
                 </p>
