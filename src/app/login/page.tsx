@@ -10,11 +10,14 @@ import toast, { Toaster } from "react-hot-toast";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { login } = useContext(AuthContext);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+
     try {
       const { token } = await postData("/api/auth/login", { email, password });
 
@@ -23,11 +26,14 @@ export default function LoginPage() {
         return;
       }
 
-      login(token);
+      await login(token);
+      toast.success("Login successful!");
       router.push("/course-info");
     } catch (error) {
       toast.error("Invalid email or password. Please try again.");
       console.error("Login error:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -41,6 +47,7 @@ export default function LoginPage() {
       >
         {/* Back Button */}
         <button
+          type="button"
           onClick={() => router.push("/")}
           className="flex items-center text-sm text-purple-400 hover:text-white transition"
         >
@@ -55,7 +62,8 @@ export default function LoginPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full p-3 rounded bg-gray-700 text-gray-100 focus:outline-purple-400"
+          disabled={isLoading}
+          className="w-full p-3 rounded bg-gray-700 text-gray-100 focus:outline-purple-400 disabled:opacity-50"
         />
         <input
           type="password"
@@ -63,14 +71,16 @@ export default function LoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="w-full p-3 rounded bg-gray-700 text-gray-100 focus:outline-purple-400"
+          disabled={isLoading}
+          className="w-full p-3 rounded bg-gray-700 text-gray-100 focus:outline-purple-400 disabled:opacity-50"
         />
 
         <button
           type="submit"
-          className="w-full py-3 bg-purple-600 hover:bg-purple-700 rounded transition text-white font-semibold"
+          disabled={isLoading}
+          className="w-full py-3 bg-purple-600 hover:bg-purple-700 rounded transition text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Login
+          {isLoading ? "Logging in..." : "Login"}
         </button>
 
         <div className="text-sm text-center space-y-2">

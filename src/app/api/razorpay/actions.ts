@@ -7,11 +7,6 @@ import Payment from "@/models/Payment";
 import { getData } from "@/utils/api";
 import { headers } from "next/headers";
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-});
-
 export type RazorpayResponseType = {
   razorpay_order_id: string;
   razorpay_payment_id: string;
@@ -40,6 +35,21 @@ export async function createPaymentOrder(
     throw new Error("User not authenticated");
   }
 
+  // Check if environment variables are available
+  if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+    console.error("Razorpay credentials missing:", {
+      keyId: process.env.RAZORPAY_KEY_ID ? "present" : "missing",
+      keySecret: process.env.RAZORPAY_KEY_SECRET ? "present" : "missing",
+    });
+    throw new Error("Razorpay credentials not configured");
+  }
+
+  // Initialize Razorpay with explicit credentials
+  const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
+  });
+
   // Get user profile
   const headersList = await headers();
   const host = headersList.get("host") || "localhost:3000";
@@ -64,23 +74,28 @@ export async function createPaymentOrder(
     receipt: `receipt_${Date.now()}`,
   };
 
-  const order = await razorpay.orders.create(options);
+  try {
+    const order = await razorpay.orders.create(options);
 
-  // Create payment record with explicit userId
-  const payment = await Payment.create({
-    userId: userData._id.toString(),
-    plan,
-    amount: baseAmount, // Store original amount
-    orderId: order.id,
-    status: "pending",
-  });
+    // Create payment record with explicit userId
+    const payment = await Payment.create({
+      userId: userData._id.toString(),
+      plan,
+      amount: baseAmount, // Store original amount
+      orderId: order.id,
+      status: "pending",
+    });
 
-  return {
-    orderId: order.id,
-    amount: order.amount,
-    key: process.env.RAZORPAY_KEY_ID,
-    paymentId: payment._id.toString(),
-  };
+    return {
+      orderId: order.id,
+      amount: order.amount,
+      key: process.env.RAZORPAY_KEY_ID,
+      paymentId: payment._id.toString(),
+    };
+  } catch (error) {
+    console.error("Razorpay order creation failed:", error);
+    throw error;
+  }
 }
 
 export async function verifyPayment(

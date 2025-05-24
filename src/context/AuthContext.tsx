@@ -13,8 +13,8 @@ interface User {
 interface AuthContextType {
   user: User | null;
   token: string | null;
-  login(token: string): Promise<void>;
-  logout(): void;
+  login: (token: string) => Promise<void>;
+  logout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -27,27 +27,66 @@ export const AuthContext = createContext<AuthContextType>({
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const t = localStorage.getItem("token");
-    if (t) login(t);
+    const initializeAuth = async () => {
+      try {
+        // Check both localStorage and cookies for token
+        const storedToken =
+          localStorage.getItem("token") || Cookies.get("token");
+
+        if (storedToken) {
+          // If token exists in either place, ensure it's in both
+          localStorage.setItem("token", storedToken);
+          Cookies.set("token", storedToken, {
+            expires: 7,
+            path: "/",
+            sameSite: "strict",
+          });
+
+          // Fetch user profile
+          const data = await getData("/api/user/profile", storedToken);
+          setUser({ name: data.name, email: data.email, role: data.role });
+          setToken(storedToken);
+        }
+      } catch (error) {
+        console.error("Auth initialization error:", error);
+        // If there's an error, clear everything
+        localStorage.removeItem("token");
+        Cookies.remove("token", { path: "/" });
+        setUser(null);
+        setToken(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeAuth();
   }, []);
 
   async function login(t: string) {
-    // Store token in both localStorage and cookies
-    localStorage.setItem("token", t);
-    Cookies.set("token", t, {
-      expires: 7, // 7 days
-      path: "/",
-      sameSite: "strict",
-    });
-
-    setToken(t);
     try {
+      // Store token in both localStorage and cookies
+      localStorage.setItem("token", t);
+      Cookies.set("token", t, {
+        expires: 7,
+        path: "/",
+        sameSite: "strict",
+      });
+
+      // Fetch user profile
       const data = await getData("/api/user/profile", t);
       setUser({ name: data.name, email: data.email, role: data.role });
-    } catch {
+      setToken(t);
+    } catch (error) {
+      console.error("Login error:", error);
+      // If there's an error, clear everything
+      localStorage.removeItem("token");
+      Cookies.remove("token", { path: "/" });
       setUser(null);
+      setToken(null);
+      throw error; // Re-throw to handle in the login component
     }
   }
 
@@ -56,6 +95,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     Cookies.remove("token", { path: "/" });
     setToken(null);
     setUser(null);
+  }
+
+  if (isLoading) {
+    return null; // Or a loading spinner
   }
 
   return (

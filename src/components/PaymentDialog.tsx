@@ -123,11 +123,11 @@ const PaymentDialog: React.FC = () => {
       <div className="bg-gray-900 rounded-xl p-6 max-w-4xl w-full">
         {/* Back Button */}
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push("/")}
           className="flex items-center text-sm text-purple-400 hover:text-white transition mb-6"
         >
           <ArrowLeft className="mr-1 h-4 w-4" />
-          Back
+          Back to Home
         </button>
 
         <div className="text-center mb-8">
