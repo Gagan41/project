@@ -15,7 +15,7 @@ const lifeInfoData = [
       "Learn how to persuade, influence & lead in any room.",
     ],
     image: "/lappi.png",
-    gradient: "from-purple-600 to-pink-600",
+    gradient: "from-gray-800 to-gray-900",
   },
   {
     title: "Network with Communication Experts",
@@ -26,7 +26,7 @@ const lifeInfoData = [
       "Celebrate breakthroughs & wins together.",
     ],
     image: "/mobile.png",
-    gradient: "from-blue-600 to-purple-600",
+    gradient: "from-gray-800 to-gray-900",
   },
   {
     title: "Get Mentored by Pros",
@@ -37,7 +37,7 @@ const lifeInfoData = [
       "Stay accountable and on track throughout your journey.",
     ],
     image: "/desk.png",
-    gradient: "from-yellow-500 to-orange-600",
+    gradient: "from-gray-800 to-gray-900",
   },
 ];
 
@@ -58,13 +58,13 @@ export default function LifeInfo() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen py-20 px-4 md:px-8 overflow-hidden bg-gradient-to-b from-black via-purple-950/20 to-black"
+      className="relative min-h-screen py-20 px-4 md:px-8 overflow-hidden bg-gradient-to-b from-black via-gray-900/20 to-black"
     >
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(147,51,234,0.1),transparent_50%)]" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(75,85,99,0.1),transparent_50%)]" />
         <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-purple-500/10 blur-3xl"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gray-800/10 blur-3xl"
           style={{ opacity, scale }}
         />
       </div>
@@ -75,7 +75,7 @@ export default function LifeInfo() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
+          className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent"
         >
           Transform Your Communication Journey
         </motion.h2>
@@ -98,12 +98,12 @@ export default function LifeInfo() {
                     background: `linear-gradient(to bottom right, ${item.gradient})`,
                   }}
                 />
-                <div className="relative bg-black/40 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:scale-[1.02] group-hover:border-purple-500/50">
+                <div className="relative bg-gray-900/40 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:scale-[1.02] group-hover:border-gray-700">
                   <div className="flex flex-col items-center text-center space-y-6">
-                    <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 p-4">
-                      <Icon className="w-full h-full text-purple-400" />
+                    <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-gray-800/20 to-gray-900/20 p-4">
+                      <Icon className="w-full h-full text-gray-400" />
                     </div>
-                    <h3 className="text-2xl font-bold text-white">
+                    <h3 className="text-2xl font-bold text-gray-200">
                       {item.title}
                     </h3>
                     <ul className="space-y-3 text-left">
@@ -114,9 +114,9 @@ export default function LifeInfo() {
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
                           transition={{ delay: i * 0.1 }}
-                          className="flex items-start gap-3 text-gray-300"
+                          className="flex items-start gap-3 text-gray-400"
                         >
-                          <Check className="mt-1 w-5 h-5 text-purple-400 shrink-0" />
+                          <Check className="mt-1 w-5 h-5 text-gray-500 shrink-0" />
                           <span>{point}</span>
                         </motion.li>
                       ))}
@@ -146,7 +146,7 @@ export default function LifeInfo() {
         >
           <button
             onClick={() => (window.location.href = "/login")}
-            className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl text-white font-semibold text-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
+            className="px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25"
           >
             Start Your Journey Today
           </button>

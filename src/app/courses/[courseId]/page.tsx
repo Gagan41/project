@@ -78,7 +78,7 @@ export default function CoursePage() {
           <p className="text-red-400 mb-4">{error}</p>
           <button
             onClick={() => router.push("/courses")}
-            className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
+            className="px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25"
           >
             Back to Courses
           </button>
@@ -91,7 +91,7 @@ export default function CoursePage() {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center text-white">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="w-8 h-8 text-cyan-400 animate-spin" />
+          <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
           <p className="text-gray-300">Loading course content...</p>
         </div>
       </div>
@@ -102,9 +102,9 @@ export default function CoursePage() {
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
       {/* Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(147,51,234,0.1),transparent_50%)]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-purple-500/10 blur-3xl" />
-        <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,#4f46e5,#7c3aed,#ec4899)] opacity-5 mix-blend-overlay" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(75,85,99,0.1),transparent_50%)]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gray-800/10 blur-3xl" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,#1f2937,#374151,#4b5563)] opacity-5 mix-blend-overlay" />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 py-8">
@@ -113,7 +113,7 @@ export default function CoursePage() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
           onClick={() => router.push("/courses")}
-          className="flex items-center gap-2 text-cyan-400 hover:text-white transition-colors duration-300 mb-8"
+          className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 mb-8"
         >
           <ArrowLeft className="w-5 h-5" />
           <span className="text-lg">Back to Courses</span>
@@ -125,7 +125,7 @@ export default function CoursePage() {
           transition={{ delay: 0.2, duration: 0.5 }}
           className="mb-8"
         >
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">
             {course.title}
           </h1>
           <p className="text-gray-300 text-lg leading-relaxed">
@@ -137,8 +137,8 @@ export default function CoursePage() {
           {/* Sidebar with modules */}
           <div className="w-full lg:w-1/4">
             <div className="relative group">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
-              <div className="relative bg-gray-900/80 backdrop-blur-xl rounded-xl border border-cyan-500/20 shadow-2xl p-4 h-[calc(100vh-200px)] overflow-y-auto">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-700 to-gray-900 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
+              <div className="relative bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800 shadow-2xl p-4 h-[calc(100vh-200px)] overflow-y-auto">
                 <h2 className="text-xl font-semibold mb-4 sticky top-0 bg-gray-900/80 backdrop-blur-sm py-2 z-10">
                   Modules
                 </h2>
@@ -159,8 +159,8 @@ export default function CoursePage() {
                       }}
                       className={`w-full text-left p-4 rounded-lg transition-all duration-300 ${
                         selectedModule?._id === module._id
-                          ? "bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg shadow-purple-500/25"
-                          : "bg-gray-800/50 hover:bg-gray-800 hover:shadow-lg hover:shadow-cyan-500/10"
+                          ? "bg-gray-800 shadow-lg shadow-gray-900/25"
+                          : "bg-gray-800/50 hover:bg-gray-800 hover:shadow-lg hover:shadow-gray-900/10"
                       }`}
                     >
                       <div className="flex justify-between items-center">
@@ -186,14 +186,14 @@ export default function CoursePage() {
           <div className="w-full lg:w-3/4">
             {selectedModule ? (
               <div className="relative group">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
-                <div className="relative bg-gray-900/80 backdrop-blur-xl rounded-xl border border-cyan-500/20 shadow-2xl p-6">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-700 to-gray-900 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
+                <div className="relative bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800 shadow-2xl p-6">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
                   >
-                    <h2 className="text-2xl font-semibold mb-4 text-cyan-400">
+                    <h2 className="text-2xl font-semibold mb-4 text-gray-300">
                       {selectedModule.title}
                     </h2>
                     <p className="text-gray-300 mb-8">
@@ -213,15 +213,15 @@ export default function CoursePage() {
                           }}
                           className={`relative group cursor-pointer transition-all duration-300 ${
                             selectedVideo?._id === video._id
-                              ? "ring-2 ring-purple-500"
-                              : "hover:ring-1 hover:ring-cyan-500/50"
+                              ? "ring-2 ring-gray-700"
+                              : "hover:ring-1 hover:ring-gray-700/50"
                           }`}
                           onClick={() => setSelectedVideo(video)}
                         >
-                          <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg blur opacity-0 group-hover:opacity-25 transition duration-300"></div>
+                          <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-700 to-gray-900 rounded-lg blur opacity-0 group-hover:opacity-25 transition duration-300"></div>
                           <div className="relative bg-gray-800/50 rounded-lg p-4">
                             <div className="flex items-center gap-3">
-                              <Play className="w-5 h-5 text-cyan-400" />
+                              <Play className="w-5 h-5 text-gray-400" />
                               <h3 className="font-medium text-white">
                                 {video.title}
                               </h3>
@@ -243,7 +243,7 @@ export default function CoursePage() {
                         className="mt-8"
                       >
                         <div className="w-full max-w-[640px] mx-auto">
-                          <div className="relative w-full h-0 pb-[56.25%] rounded-lg overflow-hidden shadow-2xl shadow-purple-500/20">
+                          <div className="relative w-full h-0 pb-[56.25%] rounded-lg overflow-hidden shadow-2xl shadow-gray-900/20">
                             <iframe
                               src={`https://www.youtube.com/embed/${extractVideoId(selectedVideo.youtubeUrl)}?modestbranding=1&rel=0`}
                               title={selectedVideo.title}
@@ -266,8 +266,8 @@ export default function CoursePage() {
               </div>
             ) : (
               <div className="relative group">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
-                <div className="relative bg-gray-900/80 backdrop-blur-xl rounded-xl border border-cyan-500/20 shadow-2xl p-6 text-center">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-700 to-gray-900 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
+                <div className="relative bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800 shadow-2xl p-6 text-center">
                   <p className="text-gray-300">
                     Select a module to view its content
                   </p>

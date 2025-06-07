@@ -215,10 +215,10 @@ export default function AdminDashboard() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="w-8 h-8 text-slate-600 animate-spin" />
-          <p className="text-slate-600">Loading dashboard...</p>
+          <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
+          <p className="text-gray-300">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -232,7 +232,7 @@ export default function AdminDashboard() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
           onClick={() => router.push("/")}
-          className="flex items-center gap-2 text-cyan-400 hover:text-white transition-colors duration-300 mb-8"
+          className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 mb-8"
         >
           <ArrowLeft className="w-5 h-5" />
           <span className="text-lg">Back to Home</span>
@@ -244,13 +244,13 @@ export default function AdminDashboard() {
           transition={{ duration: 0.5 }}
           className="mb-12"
         >
-          <h1 className="text-3xl font-bold text-white-800 mb-8">
+          <h1 className="text-3xl font-bold text-white mb-8">
             Course Management Dashboard
           </h1>
 
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <div className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800 shadow-2xl p-6">
             <form onSubmit={handleSubmit} className="space-y-6">
-              <h2 className="text-xl font-semibold text-black">
+              <h2 className="text-xl font-semibold text-white">
                 Add New Course
               </h2>
               <input
@@ -258,17 +258,17 @@ export default function AdminDashboard() {
                 placeholder="Course Title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-slate-400 focus:outline-none text-slate-800 placeholder-slate-400 transition-all duration-300"
+                className="w-full p-3 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-gray-600 focus:outline-none text-white placeholder-gray-400 transition-all duration-300"
                 required
               />
               <textarea
                 placeholder="Course Description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full p-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-slate-400 focus:outline-none text-slate-800 placeholder-slate-400 transition-all duration-300"
+                className="w-full p-3 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-gray-600 focus:outline-none text-white placeholder-gray-400 transition-all duration-300"
                 required
               />
-              <button className="w-full bg-slate-800 text-white py-3 rounded-lg hover:bg-slate-700 transition-all duration-300 flex items-center justify-center gap-2">
+              <button className="px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25 w-full flex items-center justify-center gap-2">
                 <Plus className="w-5 h-5" />
                 Save Course
               </button>
@@ -281,7 +281,7 @@ export default function AdminDashboard() {
             Existing Courses
           </h2>
           {courses.length === 0 ? (
-            <p className="text-center text-slate-500">No courses found.</p>
+            <p className="text-center text-gray-400">No courses found.</p>
           ) : (
             courses.map((course, index) => (
               <motion.div
@@ -289,26 +289,26 @@ export default function AdminDashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="bg-white rounded-xl shadow-sm border border-slate-200 p-6"
+                className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800 shadow-2xl p-6"
               >
                 <div className="flex justify-between items-start gap-4">
                   <div className="flex-grow">
-                    <h3 className="text-xl font-semibold text-slate-800 mb-2">
+                    <h3 className="text-xl font-semibold text-white mb-2">
                       {course.title}
                     </h3>
-                    <p className="text-slate-600">{course.description}</p>
+                    <p className="text-gray-300">{course.description}</p>
                   </div>
                   <div className="flex gap-2">
                     <button
                       onClick={() => setSelectedCourse(course)}
-                      className="px-4 py-2 bg-slate-100 text-slate-800 rounded-lg hover:bg-slate-200 transition-all duration-300 flex items-center gap-2"
+                      className="px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25 flex items-center gap-2"
                     >
                       <BookOpen className="w-4 h-4" />
                       Manage Modules
                     </button>
                     <button
                       onClick={() => handleDeleteCourse(course._id)}
-                      className="px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-all duration-300 flex items-center gap-2"
+                      className="px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25 flex items-center gap-2"
                     >
                       <Trash2 className="w-4 h-4" />
                       Delete
@@ -323,9 +323,9 @@ export default function AdminDashboard() {
                     transition={{ duration: 0.3 }}
                     className="mt-6"
                   >
-                    <div className="bg-slate-50 rounded-xl p-6">
+                    <div className="bg-gray-800/50 rounded-xl p-6">
                       <form onSubmit={handleAddModule} className="space-y-4">
-                        <h4 className="text-lg font-semibold text-slate-800">
+                        <h4 className="text-lg font-semibold text-white">
                           Add New Module
                         </h4>
                         <input
@@ -333,24 +333,24 @@ export default function AdminDashboard() {
                           placeholder="Module Title"
                           value={moduleTitle}
                           onChange={(e) => setModuleTitle(e.target.value)}
-                          className="w-full p-3 rounded-lg bg-white border border-slate-200 focus:border-slate-400 focus:outline-none text-slate-800 placeholder-slate-400 transition-all duration-300"
+                          className="w-full p-3 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-gray-600 focus:outline-none text-white placeholder-gray-400 transition-all duration-300"
                           required
                         />
                         <textarea
                           placeholder="Module Description"
                           value={moduleDescription}
                           onChange={(e) => setModuleDescription(e.target.value)}
-                          className="w-full p-3 rounded-lg bg-white border border-slate-200 focus:border-slate-400 focus:outline-none text-slate-800 placeholder-slate-400 transition-all duration-300"
+                          className="w-full p-3 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-gray-600 focus:outline-none text-white placeholder-gray-400 transition-all duration-300"
                           required
                         />
-                        <button className="w-full bg-slate-800 text-white py-3 rounded-lg hover:bg-slate-700 transition-all duration-300 flex items-center justify-center gap-2">
+                        <button className="px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25 w-full flex items-center justify-center gap-2">
                           <Plus className="w-5 h-5" />
                           Add Module
                         </button>
                       </form>
 
                       <div className="mt-8 space-y-4">
-                        <h4 className="text-lg font-semibold text-slate-800">
+                        <h4 className="text-lg font-semibold text-white">
                           Modules
                         </h4>
                         {course.modules?.map((module, moduleIndex) => (
@@ -362,28 +362,28 @@ export default function AdminDashboard() {
                               delay: moduleIndex * 0.1,
                               duration: 0.5,
                             }}
-                            className="bg-white rounded-xl shadow-sm border border-slate-200 p-4"
+                            className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800 shadow-2xl p-4"
                           >
                             <div className="flex justify-between items-start gap-4">
                               <div className="flex-grow">
-                                <h5 className="font-semibold text-slate-800">
+                                <h5 className="font-semibold text-white">
                                   {module.title}
                                 </h5>
-                                <p className="text-slate-600">
+                                <p className="text-gray-300">
                                   {module.description}
                                 </p>
                               </div>
                               <div className="flex gap-2">
                                 <button
                                   onClick={() => setSelectedModule(module)}
-                                  className="px-3 py-1 bg-slate-100 text-slate-800 rounded-lg hover:bg-slate-200 transition-all duration-300 flex items-center gap-2"
+                                  className="px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25 flex items-center gap-2"
                                 >
                                   <Video className="w-4 h-4" />
                                   Manage Videos
                                 </button>
                                 <button
                                   onClick={() => handleDeleteModule(module._id)}
-                                  className="px-3 py-1 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-all duration-300 flex items-center gap-2"
+                                  className="px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25 flex items-center gap-2"
                                 >
                                   <Trash2 className="w-4 h-4" />
                                   Delete
@@ -398,12 +398,12 @@ export default function AdminDashboard() {
                                 transition={{ duration: 0.3 }}
                                 className="mt-4"
                               >
-                                <div className="bg-slate-50 rounded-xl p-4">
+                                <div className="bg-gray-800/50 rounded-xl p-4">
                                   <form
                                     onSubmit={handleAddVideo}
                                     className="space-y-4"
                                   >
-                                    <h5 className="font-semibold text-slate-800">
+                                    <h5 className="font-semibold text-white">
                                       Add New Video
                                     </h5>
                                     <input
@@ -413,7 +413,7 @@ export default function AdminDashboard() {
                                       onChange={(e) =>
                                         setVideoTitle(e.target.value)
                                       }
-                                      className="w-full p-3 rounded-lg bg-white border border-slate-200 focus:border-slate-400 focus:outline-none text-slate-800 placeholder-slate-400 transition-all duration-300"
+                                      className="w-full p-3 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-gray-600 focus:outline-none text-white placeholder-gray-400 transition-all duration-300"
                                       required
                                     />
                                     <textarea
@@ -422,7 +422,7 @@ export default function AdminDashboard() {
                                       onChange={(e) =>
                                         setVideoDescription(e.target.value)
                                       }
-                                      className="w-full p-3 rounded-lg bg-white border border-slate-200 focus:border-slate-400 focus:outline-none text-slate-800 placeholder-slate-400 transition-all duration-300"
+                                      className="w-full p-3 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-gray-600 focus:outline-none text-white placeholder-gray-400 transition-all duration-300"
                                       required
                                     />
                                     <input
@@ -432,17 +432,17 @@ export default function AdminDashboard() {
                                       onChange={(e) =>
                                         setYoutubeUrl(e.target.value)
                                       }
-                                      className="w-full p-3 rounded-lg bg-white border border-slate-200 focus:border-slate-400 focus:outline-none text-slate-800 placeholder-slate-400 transition-all duration-300"
+                                      className="w-full p-3 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-gray-600 focus:outline-none text-white placeholder-gray-400 transition-all duration-300"
                                       required
                                     />
-                                    <button className="w-full bg-slate-800 text-white py-3 rounded-lg hover:bg-slate-700 transition-all duration-300 flex items-center justify-center gap-2">
+                                    <button className="px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25 w-full flex items-center justify-center gap-2">
                                       <Plus className="w-5 h-5" />
                                       Add Video
                                     </button>
                                   </form>
 
                                   <div className="mt-6 space-y-3">
-                                    <h5 className="font-semibold text-slate-800">
+                                    <h5 className="font-semibold text-white">
                                       Videos
                                     </h5>
                                     {module.videos &&
@@ -456,14 +456,14 @@ export default function AdminDashboard() {
                                             delay: videoIndex * 0.1,
                                             duration: 0.5,
                                           }}
-                                          className="bg-white rounded-xl shadow-sm border border-slate-200 p-4"
+                                          className="bg-gray-900/80 backdrop-blur-xl rounded-xl border border-gray-800 shadow-2xl p-4"
                                         >
                                           <div className="flex justify-between items-start gap-4">
                                             <div className="flex-grow">
-                                              <h6 className="font-medium text-slate-800">
+                                              <h6 className="font-medium text-white">
                                                 {video.title}
                                               </h6>
-                                              <p className="text-slate-600">
+                                              <p className="text-gray-300">
                                                 {video.description}
                                               </p>
                                             </div>
@@ -471,7 +471,7 @@ export default function AdminDashboard() {
                                               onClick={() =>
                                                 handleDeleteVideo(video._id)
                                               }
-                                              className="px-3 py-1 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-all duration-300 flex items-center gap-2"
+                                              className="px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25 flex items-center gap-2"
                                             >
                                               <Trash2 className="w-4 h-4" />
                                               Delete
@@ -480,7 +480,7 @@ export default function AdminDashboard() {
                                         </motion.div>
                                       ))
                                     ) : (
-                                      <p className="text-slate-500 text-center">
+                                      <p className="text-gray-400 text-center">
                                         No videos added yet
                                       </p>
                                     )}

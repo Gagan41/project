@@ -39,36 +39,32 @@ const PricingCard: React.FC<PricingCardProps> = ({
       transition={{ duration: 0.5 }}
       className="relative group"
     >
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-700 to-gray-900 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
       <div
         className={`relative p-8 rounded-xl border ${
           isPopular
-            ? "border-purple-500/50 bg-gray-900/80 backdrop-blur-xl"
+            ? "border-gray-800 bg-gray-900/80 backdrop-blur-xl"
             : "border-gray-700/50 bg-gray-900/80 backdrop-blur-xl"
         }`}
       >
         {isPopular && (
           <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-            <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-1.5 rounded-full text-sm font-medium shadow-lg shadow-purple-500/25">
+            <span className="bg-gradient-to-r from-gray-800 to-gray-900 text-white px-4 py-1.5 rounded-full text-sm font-medium shadow-lg shadow-gray-900/25">
               Most Popular
             </span>
           </div>
         )}
         <div className="space-y-4">
-          <h3 className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          <h3 className="text-2xl font-bold bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">
             {title}
           </h3>
           <p className="text-gray-400 text-lg">{description}</p>
-          <div className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+          <div className="text-4xl font-bold bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">
             {price}
           </div>
           <button
             onClick={() => onPurchase(plan)}
-            className={`w-full py-4 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 ${
-              isPopular
-                ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg hover:shadow-purple-500/25"
-                : "bg-gray-800 text-white hover:bg-gray-700 hover:shadow-lg hover:shadow-gray-500/25"
-            }`}
+            className="w-full px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25"
           >
             <span className="flex items-center justify-center gap-2">
               {buttonText}
@@ -141,18 +137,18 @@ const PaymentDialog: React.FC = () => {
       <div className="relative max-w-5xl w-full">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(147,51,234,0.1),transparent_50%)]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-purple-500/10 blur-3xl" />
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(75,85,99,0.1),transparent_50%)]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gray-800/10 blur-3xl" />
         </div>
 
-        <div className="relative bg-gray-900/80 backdrop-blur-xl rounded-2xl border border-purple-500/20 shadow-2xl p-8">
+        <div className="relative bg-gray-900/80 backdrop-blur-xl rounded-2xl border border-gray-800 shadow-2xl p-8">
           {/* Back Button */}
           <motion.button
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             onClick={() => router.push("/")}
-            className="flex items-center text-cyan-400 hover:text-white transition-colors duration-300 mb-8"
+            className="flex items-center text-gray-400 hover:text-white transition-colors duration-300 mb-8"
           >
             <ArrowLeft className="mr-2 h-5 w-5" />
             <span className="text-lg">Back to Home</span>
@@ -164,7 +160,7 @@ const PaymentDialog: React.FC = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">
               Choose Your Plan
             </h2>
             <p className="text-xl text-gray-300">
@@ -211,15 +207,15 @@ const PaymentDialog: React.FC = () => {
           >
             <div className="flex flex-wrap justify-center gap-8 text-gray-400">
               <div className="flex items-center gap-2">
-                <Check className="w-5 h-5 text-purple-400" />
+                <Check className="w-5 h-5 text-gray-400" />
                 <span>Secure Payment</span>
               </div>
               <div className="flex items-center gap-2">
-                <Check className="w-5 h-5 text-purple-400" />
+                <Check className="w-5 h-5 text-gray-400" />
                 <span>30-Day Money Back</span>
               </div>
               <div className="flex items-center gap-2">
-                <Check className="w-5 h-5 text-purple-400" />
+                <Check className="w-5 h-5 text-gray-400" />
                 <span>Instant Access</span>
               </div>
             </div>

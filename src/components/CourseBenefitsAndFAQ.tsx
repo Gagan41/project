@@ -92,8 +92,8 @@ export default function CourseBenefitsAndFAQ() {
     <section className="relative py-20 px-4 md:px-8 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(147,51,234,0.1),transparent_50%)]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-purple-500/10 blur-3xl" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(75,85,99,0.1),transparent_50%)]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gray-800/10 blur-3xl" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
@@ -103,7 +103,7 @@ export default function CourseBenefitsAndFAQ() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
+            className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent"
           >
             Course Benefits
           </motion.h2>
@@ -118,14 +118,14 @@ export default function CourseBenefitsAndFAQ() {
                 transition={{ delay: idx * 0.1 }}
                 className="group relative"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-pink-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl blur-xl" />
-                <div className="relative bg-black/40 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:scale-[1.02] group-hover:border-purple-500/50">
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-800/20 to-gray-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl blur-xl" />
+                <div className="relative bg-gray-900/40 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 h-full transform transition-all duration-300 group-hover:scale-[1.02] group-hover:border-gray-700">
                   <div className="flex flex-col items-center text-center space-y-4">
                     <span className="text-4xl">{benefit.icon}</span>
-                    <h3 className="text-xl font-bold text-white">
+                    <h3 className="text-xl font-bold text-gray-200">
                       {benefit.title}
                     </h3>
-                    <p className="text-gray-300">{benefit.description}</p>
+                    <p className="text-gray-400">{benefit.description}</p>
                   </div>
                 </div>
               </motion.div>
@@ -139,7 +139,7 @@ export default function CourseBenefitsAndFAQ() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
+            className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent"
           >
             Frequently Asked Questions
           </motion.h2>
@@ -158,16 +158,16 @@ export default function CourseBenefitsAndFAQ() {
                   onClick={() =>
                     setOpenFaqIndex(openFaqIndex === idx ? null : idx)
                   }
-                  className="w-full bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl p-6 text-left transition-all duration-300 hover:border-purple-500/50"
+                  className="w-full bg-gray-900/40 backdrop-blur-sm border border-gray-800 rounded-xl p-6 text-left transition-all duration-300 hover:border-gray-700"
                 >
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-white">
+                    <h3 className="text-lg font-semibold text-gray-200">
                       {faq.question}
                     </h3>
                     {openFaqIndex === idx ? (
-                      <ChevronUp className="w-5 h-5 text-purple-400" />
+                      <ChevronUp className="w-5 h-5 text-gray-400" />
                     ) : (
-                      <ChevronDown className="w-5 h-5 text-purple-400" />
+                      <ChevronDown className="w-5 h-5 text-gray-400" />
                     )}
                   </div>
                   <AnimatePresence>
@@ -179,7 +179,7 @@ export default function CourseBenefitsAndFAQ() {
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <p className="mt-4 text-gray-300">{faq.answer}</p>
+                        <p className="mt-4 text-gray-400">{faq.answer}</p>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -198,7 +198,7 @@ export default function CourseBenefitsAndFAQ() {
         >
           <button
             onClick={() => (window.location.href = "/login")}
-            className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl text-white font-semibold text-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
+            className="px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25"
           >
             Join the Course Today
           </button>
