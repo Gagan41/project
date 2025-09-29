@@ -213,7 +213,7 @@ export default function Page() {
                   what you’ll unlock inside{" "}
                   <span className="relative inline-block">
                     <span className="relative z-10 font-bold bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">
-                      Bold Voice System
+                      Bold Voice Systems
                     </span>
                     <span className="absolute inset-0 bg-gray-700/20 blur-sm scale-110" />
                   </span>

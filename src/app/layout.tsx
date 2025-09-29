@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import LayoutWithNavbar from "../components/LayoutWithNavbar";
 import { AuthProvider } from "../context/AuthContext";
 import { FloatingGuidancePayment } from "../components/PaymentDialog";
+import { ModalProvider } from "../context/ModalContext";
 
 export const metadata: Metadata = {
   title: "Bold Voice Systems",
@@ -22,14 +23,18 @@ export default function RootLayout({
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
         className={
-          inter.className + " flex flex-col min-h-screen bg-black text-gray-100"
+          inter.className +
+          " flex flex-col min-h-screen bg-black text-gray-100"
         }
       >
         <AuthProvider>
-          <LayoutWithNavbar />
-          <main className="flex-grow pt-20">{children}</main>
-          <FloatingGuidancePayment />
-          <Footer />
+          <ModalProvider>
+            <LayoutWithNavbar />
+            {/* Added pb-24 only for small screens to avoid overlap with floating button */}
+            <main className="flex-grow pt-20 pb-24 sm:pb-0">{children}</main>
+            <FloatingGuidancePayment />
+            <Footer />
+          </ModalProvider>
         </AuthProvider>
       </body>
     </html>

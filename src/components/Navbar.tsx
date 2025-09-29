@@ -5,10 +5,12 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Menu, X, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useModal } from "../context/ModalContext";
 
 export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { openModal } = useModal();
 
   const scrollToFeatures = () => {
     const section = document.getElementById("features");
@@ -204,6 +206,32 @@ export default function Navbar() {
                   >
                     Logout
                   </button>
+                  {/* Mobile Footer Links in Drawer */}
+                  <div className="mt-auto w-full border-t border-gray-800 pt-4 text-center text-sm text-gray-500">
+                    <button
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        openModal("terms");
+                      }}
+                      className="block w-full py-1 hover:text-gray-300"
+                    >
+                      Terms of Service
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        openModal("refund");
+                      }}
+                      className="block w-full py-1 hover:text-gray-300"
+                    >
+                      Refund Policy
+                    </button>
+                    <div className="mt-2 text-gray-600">
+                      © {new Date().getFullYear()} Bold Voice Systems. All
+                      rights reserved.
+                    </div>
+                  </div>
                 </>
               ) : (
                 <div className="flex flex-col gap-3 mt-4 w-full items-center">
