@@ -177,6 +177,8 @@ export default function AdminDashboard() {
           youtubeUrl,
         }
       );
+
+      console.log("Video added:", response);
       setVideoTitle("");
       setVideoDescription("");
       setYoutubeUrl("");

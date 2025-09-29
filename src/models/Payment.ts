@@ -8,7 +8,7 @@ const paymentSchema = new mongoose.Schema({
   },
   plan: {
     type: String,
-    enum: ["one-time", "3-month", "monthly"],
+    enum: ["one-time"],
     required: true,
   },
   amount: {
@@ -41,14 +41,6 @@ paymentSchema.pre("save", function (next) {
   if (this.plan === "one-time") {
     // One-time purchase never expires
     this.expiresAt = new Date("2100-12-31");
-  } else if (this.plan === "3-month") {
-    // 3 months from creation
-    this.expiresAt = new Date(this.createdAt);
-    this.expiresAt.setMonth(this.expiresAt.getMonth() + 3);
-  } else if (this.plan === "monthly") {
-    // 1 month from creation
-    this.expiresAt = new Date(this.createdAt);
-    this.expiresAt.setMonth(this.expiresAt.getMonth() + 1);
   }
   next();
 });

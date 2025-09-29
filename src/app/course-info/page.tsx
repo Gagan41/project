@@ -50,7 +50,7 @@ export default function CourseInfoPage() {
             >
               This course is designed to transform your English speaking
               abilities, boost your confidence, and sharpen your communication
-              skills — whether you're preparing for a job interview, aiming to
+              skills — whether youre preparing for a job interview, aiming to
               ace public speaking, or simply want to speak English with fluency
               and finesse.
             </motion.p>
@@ -63,7 +63,7 @@ export default function CourseInfoPage() {
             >
               <div>
                 <h2 className="text-2xl font-semibold text-gray-300 mb-4">
-                  What You'll Learn:
+                  What You Learn:
                 </h2>
                 <ul className="space-y-3">
                   {[
@@ -92,7 +92,7 @@ export default function CourseInfoPage() {
                   Who Is This Course For?
                 </h2>
                 <p className="text-gray-300 leading-relaxed">
-                  If you're a student, job seeker, entrepreneur, or anyone
+                  If youre a student, job seeker, entrepreneur, or anyone
                   looking to enhance your communication skills and express
                   yourself confidently in English — this course is for you!
                 </p>
@@ -128,7 +128,7 @@ export default function CourseInfoPage() {
             >
               <button
                 onClick={() => router.push("/courses")}
-                className="px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25"
+                className="px-8 py-4 bg-yellow-400 text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25"
               >
                 Explore Courses
               </button>

@@ -15,7 +15,7 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [showOtpInput, setShowOtpInput] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  //const [error, setError] = useState<string | null>(null);
   const { login } = useContext(AuthContext);
   const router = useRouter();
 
@@ -29,18 +29,26 @@ export default function RegisterPage() {
       await postData("/api/auth/send-otp", { email, type: "REGISTRATION" });
       setShowOtpInput(true);
       toast.success("OTP sent to your email");
-    } catch (err: any) {
-      if (err.message.includes("Email already exists")) {
-        toast.error("An account with this email already exists");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        if (err.message.includes("Email already exists")) {
+          toast.error("An account with this email already exists");
+        } else {
+          toast.error(err.message || "Failed to send OTP");
+        }
       } else {
-        toast.error(err.message || "Failed to send OTP");
+        // Fallback if err is not an Error object
+        toast.error("Failed to send OTP");
       }
     }
   };
 
+  interface RegisterResponse {
+    token: string;
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
 
     if (password !== confirmPassword) {
       toast.error("Passwords don't match");
@@ -61,18 +69,24 @@ export default function RegisterPage() {
       });
 
       // Proceed with registration
-      const { token } = await postData("/api/auth/register", {
+      const { token } = await postData<RegisterResponse>("/api/auth/register", {
         name,
         email,
         password,
       });
-      login(token);
+
+      login(token); // ✅ token is now typed as string
       toast.success(
         "Registration successful! Please select a plan to continue."
       );
       router.push("/payment");
-    } catch (err: any) {
-      toast.error(err.message || "Registration failed");
+    } catch (err: unknown) {
+      console.error(err);
+      if (err instanceof Error) {
+        toast.error(err.message);
+      } else {
+        toast.error("Registration failed");
+      }
     }
   };
 
@@ -192,7 +206,7 @@ export default function RegisterPage() {
 
               <button
                 type="submit"
-                className="w-full group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-black bg-white rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25"
+                className="w-full group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-black bg-yellow-400 rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25"
               >
                 {showOtpInput ? "Verify & Register" : "Send OTP"}
               </button>

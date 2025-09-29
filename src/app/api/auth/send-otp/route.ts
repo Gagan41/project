@@ -45,13 +45,18 @@ export async function POST(req: NextRequest) {
     await sendOTPEmail(email, otp, type);
 
     return NextResponse.json({ message: "OTP sent successfully" });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Send OTP error:", error);
-    // If it's a known error, return it with appropriate status
-    if (error.message === "No account found with this email") {
-      return NextResponse.json({ error: error.message }, { status: 404 });
+
+    if (error instanceof Error) {
+      // If it's a known error, return it with appropriate status
+      if (error.message === "No account found with this email") {
+        return NextResponse.json({ error: error.message }, { status: 404 });
+      }
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
-    // For other errors, return a generic error
+
+    // Fallback for non-Error values
     return NextResponse.json({ error: "Failed to send OTP" }, { status: 500 });
   }
 }

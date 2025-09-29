@@ -14,7 +14,7 @@ export async function verifyPaymentAccess(token: string): Promise<boolean> {
     });
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({}));
+      await response.json().catch(() => ({})); // just consume response
 
       if (response.status === 401) {
         throw {

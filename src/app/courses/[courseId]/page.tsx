@@ -40,7 +40,7 @@ export default function CoursePage() {
 
     const fetchCourse = async () => {
       try {
-        const data = await getData(`/api/courses/${courseId}`);
+          const data = (await getData(`/api/courses/${courseId}`)) as Course;
         if (!data) {
           setError("Course not found");
           return;

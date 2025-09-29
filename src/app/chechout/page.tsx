@@ -57,7 +57,7 @@ export default function CheckoutPage() {
       />
       <button
         type="submit"
-        className="w-full px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25"
+        className="w-full px-8 py-4 bg-yellow-400 text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25"
       >
         Pay Now
       </button>

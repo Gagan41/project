@@ -32,11 +32,12 @@ export async function POST(req: NextRequest) {
     await OTP.deleteOne({ _id: otpRecord._id });
 
     return NextResponse.json({ message: "Password reset successful" });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Reset password error:", error);
-    return NextResponse.json(
-      { error: "Failed to reset password" },
-      { status: 500 }
-    );
+
+    const message =
+      error instanceof Error ? error.message : "Failed to reset password";
+
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

@@ -22,7 +22,16 @@ export default function ProfilePage() {
 
     async function fetchProfile() {
       try {
-        const data = await getData("/api/user/profile", token || undefined);
+        const data = await getData<{ name: string; email: string }>(
+          "/api/user/profile",
+          token ?? undefined // ✅ convert null → undefined
+        );
+
+        if (!data) {
+          console.error("No profile data found");
+          return;
+        }
+
         setName(data.name);
         setEmail(data.email);
         setInitialName(data.name);
@@ -51,9 +60,13 @@ export default function ProfilePage() {
       setInitialName(name);
       setInitialEmail(email);
       router.refresh();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      toast.error(err.message || "Failed to update profile");
+      if (err instanceof Error) {
+        toast.error(err.message);
+      } else {
+        toast.error("Failed to update profile");
+      }
     }
   };
 
@@ -162,7 +175,7 @@ export default function ProfilePage() {
 
             <button
               type="submit"
-              className="px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25 w-full"
+              className="px-8 py-4 bg-yellow-400 text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25 w-full"
             >
               Save Changes
             </button>

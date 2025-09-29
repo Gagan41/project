@@ -11,18 +11,18 @@ export function registerModels() {
   try {
     mongoose.model('Course');
   } catch {
-    CourseModel;
+    mongoose.model('Course', CourseModel.schema);
   }
 
   try {
     mongoose.model('Module');
   } catch {
-    ModuleModel;
+    mongoose.model('Module', ModuleModel.schema);
   }
 
   try {
     mongoose.model('Video');
   } catch {
-    VideoModel;
+    mongoose.model('Video', VideoModel.schema);
   }
-} 
+}

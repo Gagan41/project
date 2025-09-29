@@ -15,9 +15,7 @@ export type RazorpayResponseType = {
 
 // Base prices in rupees
 const PLAN_PRICES = {
-  "one-time": 2999.0,
-  "3-month": 1199.0,
-  monthly: 499.0,
+  "one-time": 4899.0,
 };
 
 // Function to ensure last decimal is 0
@@ -27,8 +25,15 @@ function adjustAmount(amount: number): number {
   return amountInPaise - (amountInPaise % 10);
 }
 
+// Define UserProfile shape
+interface UserProfile {
+  _id: string;
+  name?: string;
+  email?: string;
+}
+
 export async function createPaymentOrder(
-  plan: "one-time" | "3-month" | "monthly",
+  plan: "one-time",
   token: string
 ) {
   if (!token) {
@@ -54,10 +59,11 @@ export async function createPaymentOrder(
   const headersList = await headers();
   const host = headersList.get("host") || "localhost:3000";
   const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-  const userData = await getData(
+
+  const userData = (await getData(
     `${protocol}://${host}/api/user/profile`,
     token
-  );
+  )) as UserProfile;
 
   if (!userData || !userData._id) {
     throw new Error("User not found or invalid user data");

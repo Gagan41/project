@@ -1,6 +1,11 @@
-// utils/api.ts
+interface ApiError {
+  error?: string;
+}
 
-export async function getData(url: string, token?: string) {
+export async function getData<T extends object = Record<string, unknown>>(
+  url: string,
+  token?: string
+): Promise<T | null> {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
   };
@@ -10,49 +15,40 @@ export async function getData(url: string, token?: string) {
   }
 
   try {
-    const res = await fetch(url, {
-      method: "GET",
-      headers,
-      cache: "no-store", // Disable caching to always get fresh data
-    });
-
-    if (process.env.NODE_ENV === "development") {
-      console.log(`[getData] ${url} response status:`, res.status);
-    }
-
+    const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
     const text = await res.text();
 
-    if (process.env.NODE_ENV === "development") {
-      console.log(`[getData] ${url} raw response:`, text);
-    }
-
-    // Handle empty response
     if (!text) {
       console.error(`[getData] ${url} returned empty response`);
       return null;
     }
 
+    let parsed: unknown;
     try {
-      const json = JSON.parse(text);
-
-      if (!res.ok) {
-        const error = json.error || `Request failed with status ${res.status}`;
-        console.error(`[getData] ${url} failed:`, error);
-        throw new Error(error);
-      }
-
-      return json;
-    } catch (e) {
-      console.error(`[getData] Failed to parse JSON response:`, e);
+      parsed = JSON.parse(text);
+    } catch {
+      console.error(`[getData] Failed to parse JSON response from ${url}`);
       throw new Error("Invalid JSON response");
     }
+
+    if (!res.ok) {
+      const errorMsg =
+        (parsed as ApiError)?.error ??
+        `Request failed with status ${res.status}`;
+      throw new Error(errorMsg);
+    }
+
+    return parsed as T;
   } catch (error) {
     console.error(`[getData] ${url} request failed:`, error);
     throw error;
   }
 }
 
-export async function postData(url: string, data: any, token?: string) {
+export async function postData<
+  TResponse extends object = Record<string, unknown>,
+  TBody extends Record<string, unknown> = Record<string, unknown>,
+>(url: string, data: TBody, token?: string): Promise<TResponse> {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
   };
@@ -67,28 +63,33 @@ export async function postData(url: string, data: any, token?: string) {
       headers,
       body: JSON.stringify(data),
     });
-
     const text = await res.text();
 
-    // Handle empty response
     if (!text) {
       throw new Error("Empty response from server");
     }
 
+    let parsed: unknown;
     try {
-      const json = JSON.parse(text);
-
-      if (!res.ok) {
-        throw new Error(
-          json.error || `Request failed with status ${res.status}`
-        );
-      }
-
-      return json;
-    } catch (e) {
-      throw new Error("Invalid response from server");
+      parsed = JSON.parse(text);
+    } catch {
+      throw new Error("Invalid JSON response");
     }
+
+    if (!res.ok) {
+      const errorMsg =
+        typeof parsed === "object" &&
+        parsed !== null &&
+        "error" in parsed &&
+        typeof (parsed as ApiError).error === "string"
+          ? (parsed as ApiError).error
+          : `Request failed with status ${res.status}`;
+      throw new Error(errorMsg);
+    }
+
+    return parsed as TResponse;
   } catch (error) {
+    console.error(`[postData] ${url} request failed:`, error);
     throw error;
   }
 }

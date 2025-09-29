@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { ArrowLeft, Check, Zap } from "lucide-react";
 import Script from "next/script";
 import {
@@ -12,6 +12,7 @@ import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 interface PricingCardProps {
   title: string;
@@ -19,8 +20,8 @@ interface PricingCardProps {
   price: string;
   buttonText: string;
   isPopular?: boolean;
-  plan: "one-time" | "3-month" | "monthly";
-  onPurchase: (plan: "one-time" | "3-month" | "monthly") => Promise<void>;
+  plan: "one-time";
+  onPurchase: (plan: "one-time") => Promise<void>;
 }
 
 const PricingCard: React.FC<PricingCardProps> = ({
@@ -81,7 +82,7 @@ const PaymentDialog: React.FC = () => {
   const router = useRouter();
   const { user, token } = useContext(AuthContext);
 
-  const handlePurchase = async (plan: "one-time" | "3-month" | "monthly") => {
+  const handlePurchase = async (plan: "one-time") => {
     if (!user || !token) {
       toast.error("Please login to purchase a plan");
       router.push("/login-portal");
@@ -110,7 +111,7 @@ const PaymentDialog: React.FC = () => {
             } else {
               toast.error("Payment verification failed");
             }
-          } catch (error) {
+          } catch {
             toast.error("Payment verification failed");
           }
         },
@@ -126,7 +127,7 @@ const PaymentDialog: React.FC = () => {
       // @ts-expect-error Razorpay types
       const rzp = new window.Razorpay(options);
       rzp.open();
-    } catch (error) {
+    } catch {
       toast.error("Failed to initiate payment");
     }
   };
@@ -168,32 +169,14 @@ const PaymentDialog: React.FC = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Single Plan Centered */}
+          <div className="flex justify-center">
             <PricingCard
-              title="One-Time Purchase"
+              title="Course Only Purchase"
               description="Pay once and access the course forever."
-              price="₹2,999"
+              price="₹4,899"
               buttonText="Get Started"
               plan="one-time"
-              onPurchase={handlePurchase}
-            />
-
-            <PricingCard
-              title="3-Month Access"
-              description="Access the course for 3 months."
-              price="₹1,199"
-              buttonText="Get Started"
-              isPopular={true}
-              plan="3-month"
-              onPurchase={handlePurchase}
-            />
-
-            <PricingCard
-              title="Monthly Access"
-              description="Cancel anytime. Billed monthly."
-              price="₹499/mo"
-              buttonText="Get Started"
-              plan="monthly"
               onPurchase={handlePurchase}
             />
           </div>
@@ -212,16 +195,96 @@ const PaymentDialog: React.FC = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-5 h-5 text-gray-400" />
-                <span>30-Day Money Back</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-5 h-5 text-gray-400" />
                 <span>Instant Access</span>
               </div>
             </div>
           </motion.div>
         </div>
       </div>
+    </div>
+  );
+};
+
+export const FloatingGuidancePayment: React.FC = () => {
+  const { user, token } = useContext(AuthContext);
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const pathname = usePathname();
+
+  // Only show on home page
+  if (pathname !== "/") return null;
+
+  const handleGuidancePayment = async () => {
+    if (!user || !token) {
+      toast.error("Please login to purchase guidance plan");
+      router.push("/login-portal");
+      return;
+    }
+    setLoading(true);
+    try {
+      const paymentData = await createPaymentOrder("one-time", token);
+      const options = {
+        key: paymentData.key,
+        amount: paymentData.amount,
+        currency: "INR",
+        name: "CourseSite",
+        description: "Guidance Plan",
+        order_id: paymentData.orderId,
+        handler: async function (response: RazorpayResponseType) {
+          try {
+            const success = await verifyPayment(
+              paymentData.paymentId,
+              response
+            );
+            if (success) {
+              toast.success("Payment successful!");
+              router.push("/course-info");
+            } else {
+              toast.error("Payment verification failed");
+            }
+          } catch {
+            toast.error("Payment verification failed");
+          }
+        },
+        prefill: {
+          email: user.email,
+        },
+        theme: {
+          color: "#10B981",
+          backdrop_color: "#ECFDF5",
+        },
+      };
+      // @ts-expect-error Razorpay types
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch {
+      toast.error("Failed to initiate payment");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed bottom-2 left-1/2 z-50 -translate-x-1/2 flex flex-col sm:flex-row items-center sm:items-center gap-2 sm:gap-4 bg-gray-900/95 border border-gray-800 rounded-lg shadow-lg px-2 py-2 sm:px-4 sm:py-2 max-w-xs w-[95vw] sm:max-w-md sm:w-auto backdrop-blur-xl">
+      <div className="flex flex-col items-center sm:items-start mr-0 sm:mr-2 w-full sm:w-auto">
+        <span className="text-[9px] sm:text-[10px] text-gray-400 mb-0.5 sm:mb-1 text-center sm:text-left leading-tight">
+          Limited Time Offer
+        </span>
+        <span className="text-[11px] sm:text-xs text-gray-400 line-through mb-0.5 sm:mb-1">
+          ₹6,000
+        </span>
+        <div className="w-5 sm:w-6 border-b border-dotted border-gray-500 mb-0.5 sm:mb-1" />
+        <span className="text-base sm:text-lg font-bold bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">
+          ₹4,899
+        </span>
+      </div>
+      <button
+        onClick={handleGuidancePayment}
+        disabled={loading}
+        className="w-full sm:w-auto px-3 py-1.5 sm:px-4 sm:py-2 bg-yellow-400 text-black font-semibold text-sm sm:text-base rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25 disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {loading ? "Processing..." : "Join Now"}
+      </button>
     </div>
   );
 };

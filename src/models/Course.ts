@@ -5,6 +5,7 @@ export interface CourseDoc extends Document {
   title:       string;
   description: string;
   modules:     mongoose.Types.ObjectId[];
+  price:       number; 
 }
 
 const CourseSchema = new Schema<CourseDoc>(

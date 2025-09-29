@@ -26,23 +26,11 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ hasActivePayment: false });
     }
 
-    // Check if the payment is still valid based on the plan
-    const now = new Date();
     let hasActivePayment = false;
 
     switch (payment.plan) {
       case "one-time":
         hasActivePayment = true; // One-time payments never expire
-        break;
-      case "3-month":
-        const threeMonthsAgo = new Date();
-        threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
-        hasActivePayment = payment.createdAt > threeMonthsAgo;
-        break;
-      case "monthly":
-        const oneMonthAgo = new Date();
-        oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-        hasActivePayment = payment.createdAt > oneMonthAgo;
         break;
     }
 

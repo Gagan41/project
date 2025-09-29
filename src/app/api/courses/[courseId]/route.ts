@@ -1,36 +1,37 @@
-import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/utils/dbConnect';
-import { CourseModel } from '@/models/Course';
-import { ModuleModel } from '@/models/Module';
-import { VideoModel } from '@/models/Video';
+import { NextRequest, NextResponse } from "next/server";
+import dbConnect from "@/utils/dbConnect";
+import { CourseModel } from "@/models/Course";
+import { ModuleModel } from "@/models/Module";
+import { VideoModel } from "@/models/Video";
 
+// ✅ Delete a course and all its modules + videos
 export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { courseId: string } }
+  _req: NextRequest,
+  context: { params: Promise<{ courseId: string }> }
 ) {
   try {
     await dbConnect();
-    const { courseId } = await params;
+    const { courseId } = await context.params; // ✅ must await
 
     if (!courseId) {
       return NextResponse.json(
-        { error: 'Course ID is required' }, 
+        { error: "Course ID is required" },
         { status: 400 }
       );
     }
 
-    // Get the course and its modules
+    // Get the course
     const course = await CourseModel.findById(courseId);
     if (!course) {
-      return NextResponse.json({ error: 'Course not found' }, { status: 404 });
+      return NextResponse.json({ error: "Course not found" }, { status: 404 });
     }
 
-    // Get all modules for this course
+    // Get all modules
     const modules = await ModuleModel.find({ course: courseId });
 
-    // Delete all videos associated with the modules
-    for (const module of modules) {
-      await VideoModel.deleteMany({ module: module._id });
+    // Delete videos in each module
+    for (const mod of modules) {
+      await VideoModel.deleteMany({ module: mod._id });
     }
 
     // Delete all modules
@@ -39,49 +40,56 @@ export async function DELETE(
     // Delete the course
     await CourseModel.findByIdAndDelete(courseId);
 
-    return NextResponse.json({ message: 'Course and all associated modules and videos deleted successfully' });
-  } catch (error) {
-    console.error('Error deleting course:', error);
+    return NextResponse.json({
+      message:
+        "Course and all associated modules and videos deleted successfully",
+    });
+  } catch (error: unknown) {
+    console.error("Error deleting course:", error);
     return NextResponse.json(
-      { error: 'Failed to delete course', details: error instanceof Error ? error.message : String(error) }, 
+      {
+        error: "Failed to delete course",
+        details: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     );
   }
 }
 
+// ✅ Get a course with its modules and videos
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { courseId: string } }
+  _req: NextRequest,
+  context: { params: Promise<{ courseId: string }> }
 ) {
   try {
     await dbConnect();
-    const { courseId } = await params;
+    const { courseId } = await context.params; // ✅ must await
 
     if (!courseId) {
       return NextResponse.json(
-        { error: 'Course ID is required' }, 
+        { error: "Course ID is required" },
         { status: 400 }
       );
     }
 
-    // Find the course and populate its modules and videos
-    const course = await CourseModel.findById(courseId)
-      .populate({
-        path: 'modules',
-        populate: {
-          path: 'videos'
-        }
-      });
+    // Populate modules and their videos
+    const course = await CourseModel.findById(courseId).populate({
+      path: "modules",
+      populate: { path: "videos" },
+    });
 
     if (!course) {
-      return NextResponse.json({ error: 'Course not found' }, { status: 404 });
+      return NextResponse.json({ error: "Course not found" }, { status: 404 });
     }
 
     return NextResponse.json(course);
-  } catch (error) {
-    console.error('Error fetching course:', error);
+  } catch (error: unknown) {
+    console.error("Error fetching course:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch course', details: error instanceof Error ? error.message : String(error) }, 
+      {
+        error: "Failed to fetch course",
+        details: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     );
   }

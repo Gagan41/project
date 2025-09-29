@@ -36,9 +36,13 @@ export default function ResetPasswordPage() {
       await postData("/api/auth/send-otp", { email, type: "PASSWORD_RESET" });
       setShowOtpInput(true);
       toast.success("OTP sent to your email");
-    } catch (err: any) {
-      if (err.message === "No account found with this email") {
-        toast.error("No account found with this email address");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        if (err.message === "No account found with this email") {
+          toast.error("No account found with this email address");
+        } else {
+          toast.error("Failed to send OTP. Please try again later.");
+        }
       } else {
         toast.error("Failed to send OTP. Please try again later.");
       }
@@ -59,9 +63,13 @@ export default function ResetPasswordPage() {
       });
       setShowNewPasswordInput(true);
       toast.success("OTP verified successfully");
-    } catch (err: any) {
-      if (err.message.includes("Invalid or expired")) {
-        toast.error("Invalid or expired OTP. Please try again.");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        if (err.message.includes("Invalid or expired")) {
+          toast.error("Invalid or expired OTP. Please try again.");
+        } else {
+          toast.error("Failed to verify OTP. Please try again later.");
+        }
       } else {
         toast.error("Failed to verify OTP. Please try again later.");
       }
@@ -83,7 +91,7 @@ export default function ResetPasswordPage() {
       await postData("/api/auth/reset-password", { email, newPassword });
       toast.success("Password reset successful");
       router.push("/login");
-    } catch (err: any) {
+    } catch {
       toast.error("Failed to reset password. Please try again later.");
     }
   };
@@ -220,7 +228,7 @@ export default function ResetPasswordPage() {
 
               <button
                 type="submit"
-                className="w-full group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-black bg-white rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25"
+                className="w-full group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-black bg-yellow-400 rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25"
               >
                 {!showOtpInput
                   ? "Send OTP"

@@ -7,33 +7,33 @@ import { Check, MessageCircle, Users, GraduationCap } from "lucide-react";
 
 const lifeInfoData = [
   {
-    title: "Master Communication Skills",
+    title: "🎯 Fluency & Flow",
     icon: MessageCircle,
     description: [
-      "World‑class custom modules to improve verbal, written & visual communication.",
-      "Practice real‑world conversation scenarios to build confidence fast.",
+      "Speak naturally, without hesitation. Ideas come out smoothly, every time.",
+      "🔹 Clarity That Commands Attention",
       "Learn how to persuade, influence & lead in any room.",
     ],
     image: "/lappi.png",
     gradient: "from-gray-800 to-gray-900",
   },
   {
-    title: "Network with Communication Experts",
+    title: "💪 Confidence in Every Conversation",
     icon: Users,
     description: [
-      "Join a private group of speakers, coaches & negotiators.",
-      "Collaborate with like‑minded communicators.",
-      "Celebrate breakthroughs & wins together.",
+      "Enter meetings, interviews, or social situations with authority—no fear, no doubt.",
+      "📈 Real-World Application",
+      "Practice with real-life scenarios so your skills work instantly—in life, work, and beyond .",
     ],
     image: "/mobile.png",
     gradient: "from-gray-800 to-gray-900",
   },
   {
-    title: "Get Mentored by Pros",
+    title: "🌟 Accent Refinement",
     icon: GraduationCap,
     description: [
-      "Get direct advice from top‑tier communication mentors.",
-      "Weekly group Q&As and 1‑on‑1 feedback sessions.",
+      "Maintain your identity while sounding polished, professional, and easy to understand.",
+      "Eliminate fillers and confusion. Speak clearly. Lead conversations. Influence outcomes.",
       "Stay accountable and on track throughout your journey.",
     ],
     image: "/desk.png",
@@ -77,7 +77,7 @@ export default function LifeInfo() {
           viewport={{ once: true }}
           className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent"
         >
-          Transform Your Communication Journey
+          What you&apos;ll learn in this course
         </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -146,9 +146,9 @@ export default function LifeInfo() {
         >
           <button
             onClick={() => (window.location.href = "/login")}
-            className="px-8 py-4 bg-white text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25"
+            className="px-8 py-4 bg-yellow-400 text-black font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25"
           >
-            Start Your Journey Today
+            Join Now!
           </button>
         </motion.div>
       </div>

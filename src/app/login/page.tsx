@@ -19,14 +19,24 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
 
+    // ✅ Define the expected response type
+    interface LoginResponse {
+      token: string;
+    }
+
     try {
-      const { token } = await postData("/api/auth/login", { email, password });
+      // ✅ Pass LoginResponse as the generic type
+      const { token } = await postData<LoginResponse>("/api/auth/login", {
+        email,
+        password,
+      });
 
       if (!token) {
         toast.error("Invalid credentials. Please try again.");
         return;
       }
 
+      // ✅ token is guaranteed to be a string here
       await login(token);
       toast.success("Login successful!");
       router.push("/course-info");
@@ -115,7 +125,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-black bg-white rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-black bg-yellow-400 rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-black hover:text-white hover:shadow-lg hover:shadow-gray-900/25 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? "Logging in..." : "Login"}
               </button>
@@ -129,7 +139,7 @@ export default function LoginPage() {
               className="mt-6 text-center space-y-3"
             >
               <p className="text-sm text-gray-400">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Link
                   href="/register"
                   className="text-gray-300 hover:text-white transition-colors duration-300"

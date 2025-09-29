@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import CourseBenefitsAndFAQ from "@/components/CourseBenefitsAndFAQ";
 import LifeInfo from "@/components/LifeInfo";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface Course {
   title: string;
@@ -15,8 +15,9 @@ interface Course {
 
 export default function Page() {
   const course: Course = {
-    title: "Mastering Communication",
-    description: "Learn to communicate like a pro in every situation.",
+    title: "Master communication",
+    description:
+      "Transform you communication from hesitant to powerful , speak with clarlity , confidence and conviction anytime , anywhere",
     videoUrl: "https://youtu.be/PGrtFamXEa4?si=OQbKMt3dwuKDLOkx",
   };
 
@@ -53,9 +54,19 @@ export default function Page() {
                 {course.title}
               </span>
             </h1>
-            <p className="text-xl sm:text-2xl text-gray-400 max-w-2xl mx-auto text-balance">
-              {course.description}
+
+            <p className="text-xl sm:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed text-balance">
+              <strong className="font-semibold text-gray-200">
+                speak with clarity
+              </strong>
+              ,{" "}
+              <strong className="font-semibold text-gray-200">
+                confidence and conviction
+              </strong>{" "}
+              anytime, anywhere.
             </p>
+
+            <p className="font-semibold text-white text-xl sm:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed text-balance">It&apos;s a skill that I will teach you how to master it </p>
           </motion.div>
 
           {/* Video Container */}
@@ -91,7 +102,7 @@ export default function Page() {
             onClick={() => {
               window.location.href = "/login";
             }}
-            className="group relative inline-flex items-center justify-center px-8 py-4 text-lg sm:text-xl font-semibold text-black bg-white rounded-xl overflow-hidden transition-all duration-300 hover:bg-black hover:text-white hover:scale-105 hover:shadow-lg hover:shadow-gray-900/25"
+            className="group relative inline-flex items-center justify-center px-8 py-4 text-lg sm:text-xl font-semibold text-black bg-yellow-400 rounded-xl overflow-hidden transition-all duration-300 hover:bg-black hover:text-white hover:scale-105 hover:shadow-lg hover:shadow-gray-900/25"
           >
             <span className="relative z-10 flex items-center gap-2">
               Join now!
@@ -104,7 +115,8 @@ export default function Page() {
 
       {/* Features Section */}
       <section id="features" className="relative py-20 px-4 sm:px-6">
-        <div className="max-w-5xl mx-auto space-y-12 relative">
+        <div className="max-w-5xl mx-auto space-y-16 relative">
+          {/* Heading */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -112,23 +124,24 @@ export default function Page() {
             className="text-center space-y-6"
           >
             <h2 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">
-              A MASSIVE UPGRADE
+              Why this matters
             </h2>
-            <p className="text-xl text-gray-400">
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
               The traditional education system never taught you how to truly
-              express yourself.
+              express yourself — and that changes here.
             </p>
           </motion.div>
 
+          {/* Content Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="relative p-8 rounded-2xl bg-gray-900/40 backdrop-blur-sm border border-gray-800"
+            className="relative p-10 rounded-2xl bg-gray-900/40 backdrop-blur-sm border border-gray-800"
           >
-            <div className="space-y-8">
-              {/* First Paragraph with Animated Elements */}
+            <div className="space-y-10">
+              {/* First Paragraph */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -137,45 +150,50 @@ export default function Page() {
                 className="relative"
               >
                 <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-gray-700 to-gray-500 rounded-full" />
-                <p className="text-xl sm:text-2xl text-gray-300 leading-relaxed text-balance pl-6">
+                <p className="text-xl sm:text-2xl text-gray-300 leading-relaxed pl-6 space-y-4">
                   <motion.span
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.4 }}
-                    className="inline-block"
+                    className="block"
                   >
                     <strong className="bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">
                       Imagine mastering the art of communication —
-                    </strong>
+                    </strong>{" "}
+                    your voice shapes how the world sees you.
                   </motion.span>
+
                   <motion.span
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.5 }}
-                    className="inline-block mt-2"
+                    className="block"
                   >
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-400 font-bold">
-                      the skill that opens every door
+                    When it lacks clarity or confidence,{" "}
+                    <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-400">
+                      even great ideas can be ignored.
                     </span>
                   </motion.span>
+
                   <motion.span
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.6 }}
-                    className="inline-block mt-2"
+                    className="block"
                   >
+                    But when you speak with{" "}
                     <strong className="bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">
-                      Gain insights directly from elite communicators who'll
-                      guide you step-by-step.
+                      strength and presence
                     </strong>
+                    , people listen, respect follows, and opportunities open.
                   </motion.span>
                 </p>
               </motion.div>
 
-              {/* Second Paragraph with Highlight Effect */}
+              {/* Second Paragraph */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -184,30 +202,22 @@ export default function Page() {
                 className="relative group"
               >
                 <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-gray-700 to-gray-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <p className="text-xl sm:text-2xl text-gray-300 text-balance pl-6">
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.8 }}
-                    className="inline-block"
-                  >
-                    That's{" "}
-                    <strong className="relative">
-                      <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-400">
-                        exactly
-                      </span>
-                      <span className="absolute inset-0 bg-gray-700/20 blur-sm transform scale-110" />
-                    </strong>{" "}
-                    what you'll unlock inside{" "}
-                    <span className="relative inline-block">
-                      <span className="relative z-10 font-bold bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">
-                        COMMUNICATION MASTERY
-                      </span>
-                      <span className="absolute inset-0 bg-gray-700/20 blur-sm transform scale-110" />
+                <p className="text-xl sm:text-2xl text-gray-300 pl-6 leading-relaxed">
+                  That’s{" "}
+                  <strong className="relative">
+                    <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-400">
+                      exactly
                     </span>
-                    .
-                  </motion.span>
+                    <span className="absolute inset-0 bg-gray-700/20 blur-sm scale-110" />
+                  </strong>{" "}
+                  what you’ll unlock inside{" "}
+                  <span className="relative inline-block">
+                    <span className="relative z-10 font-bold bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">
+                      Bold Voice System
+                    </span>
+                    <span className="absolute inset-0 bg-gray-700/20 blur-sm scale-110" />
+                  </span>
+                  .
                 </p>
               </motion.div>
 

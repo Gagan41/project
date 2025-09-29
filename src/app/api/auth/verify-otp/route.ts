@@ -27,11 +27,12 @@ export async function POST(req: NextRequest) {
     await otpRecord.save();
 
     return NextResponse.json({ message: "OTP verified successfully" });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Verify OTP error:", error);
-    return NextResponse.json(
-      { error: "Failed to verify OTP" },
-      { status: 500 }
-    );
+
+    const message =
+      error instanceof Error ? error.message : "Failed to verify OTP";
+
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

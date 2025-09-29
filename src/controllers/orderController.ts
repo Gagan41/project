@@ -1,12 +1,34 @@
-import Order from '../models/Order'
-import Course from '../models/Course'
+import Order from "../models/Order";
+import { CourseModel } from "../models/Course";
 
-interface CheckoutDTO { courseId: string; name: string; address: string; phone: string }
+interface CheckoutDTO {
+  courseId: string;
+  name: string;
+  address: string;
+  phone: string;
+}
 
-export async function createOrder({ courseId, name, address, phone }: CheckoutDTO) {
-  const course = await Course.findById(courseId)
-  if (!course) throw new Error('Course not found')
-  // integrate Phone-PG here
-  const order = await Order.create({ user: null, course: courseId, amount: course.price, paymentId: '', status: 'pending' })
-  return order
+export async function createOrder({
+  courseId,
+  name,
+  address,
+  phone,
+}: CheckoutDTO) {
+  const course = await CourseModel.findById(courseId);
+  if (!course) throw new Error("Course not found");
+
+  // TODO: integrate Phone-PG here (payment gateway)
+
+  const order = await Order.create({
+    user: null, // you can set the user ID here if available
+    course: courseId,
+    amount: course.price,
+    paymentId: "", // will be updated after successful payment
+    status: "pending",
+    name,
+    address,
+    phone,
+  });
+
+  return order;
 }
