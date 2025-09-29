@@ -15,7 +15,7 @@ export type RazorpayResponseType = {
 
 // Base prices in rupees
 const PLAN_PRICES = {
-  "one-time": 4899.0,
+  "one-time": 9733.0,
 };
 
 // Function to ensure last decimal is 0
@@ -30,12 +30,11 @@ interface UserProfile {
   _id: string;
   name?: string;
   email?: string;
+  phone?: string;
+  address?: string;
 }
 
-export async function createPaymentOrder(
-  plan: "one-time",
-  token: string
-) {
+export async function createPaymentOrder(plan: "one-time", token: string) {
   if (!token) {
     throw new Error("User not authenticated");
   }
@@ -90,6 +89,10 @@ export async function createPaymentOrder(
       amount: baseAmount, // Store original amount
       orderId: order.id,
       status: "pending",
+      name: userData.name || "Unknown", // fallback if missing
+      email: userData.email || "N/A",
+      phone: userData.phone || "N/A",
+      address: userData.address || "N/A",
     });
 
     return {
