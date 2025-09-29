@@ -5,7 +5,7 @@ interface ApiError {
 export async function getData<T extends object = Record<string, unknown>>(
   url: string,
   token?: string
-): Promise<T | null> {
+): Promise<T> {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
   };
@@ -19,8 +19,7 @@ export async function getData<T extends object = Record<string, unknown>>(
     const text = await res.text();
 
     if (!text) {
-      console.error(`[getData] ${url} returned empty response`);
-      return null;
+      throw new Error(`[getData] ${url} returned empty response`);
     }
 
     let parsed: unknown;
@@ -62,11 +61,12 @@ export async function postData<
       method: "POST",
       headers,
       body: JSON.stringify(data),
+      cache: "no-store",
     });
     const text = await res.text();
 
     if (!text) {
-      throw new Error("Empty response from server");
+      throw new Error(`[postData] ${url} returned empty response`);
     }
 
     let parsed: unknown;
@@ -78,12 +78,8 @@ export async function postData<
 
     if (!res.ok) {
       const errorMsg =
-        typeof parsed === "object" &&
-        parsed !== null &&
-        "error" in parsed &&
-        typeof (parsed as ApiError).error === "string"
-          ? (parsed as ApiError).error
-          : `Request failed with status ${res.status}`;
+        (parsed as ApiError)?.error ??
+        `Request failed with status ${res.status}`;
       throw new Error(errorMsg);
     }
 

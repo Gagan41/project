@@ -1,4 +1,4 @@
-import Order from "../models/Order";
+import Payment from "../models/Payment";
 import { CourseModel } from "../models/Course";
 
 interface CheckoutDTO {
@@ -6,23 +6,26 @@ interface CheckoutDTO {
   name: string;
   address: string;
   phone: string;
+  userId: string;
 }
 
-export async function createOrder({
+export async function createPayment({
   courseId,
   name,
   address,
   phone,
+  userId,
 }: CheckoutDTO) {
   const course = await CourseModel.findById(courseId);
   if (!course) throw new Error("Course not found");
 
   // TODO: integrate Phone-PG here (payment gateway)
 
-  const order = await Order.create({
-    user: null, // you can set the user ID here if available
-    course: courseId,
+  const payment = await Payment.create({
+    userId,
+    plan: "one-time",
     amount: course.price,
+    orderId: "", // will be set from PG response
     paymentId: "", // will be updated after successful payment
     status: "pending",
     name,
@@ -30,5 +33,5 @@ export async function createOrder({
     phone,
   });
 
-  return order;
+  return payment;
 }

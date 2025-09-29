@@ -43,7 +43,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             sameSite: "strict",
           });
 
-          // ✅ Tell getData what to expect
           const data = await getData<User>("/api/user/profile", storedToken);
 
           setUser({
@@ -76,7 +75,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         sameSite: "strict",
       });
 
-      // ✅ Type the response here too
       const data = await getData<User>("/api/user/profile", t);
 
       setUser({
