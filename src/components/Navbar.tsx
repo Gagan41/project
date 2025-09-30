@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 import { Menu, X, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useModal } from "../context/ModalContext";
+import Image from "next/image";
 
 export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
@@ -34,10 +35,20 @@ export default function Navbar() {
         <div className="flex items-center justify-between max-w-7xl mx-auto w-full">
           {/* Logo */}
           <Link href="/">
-            <span className="text-2xl font-bold relative group cursor-pointer">
-              <span className="absolute -inset-1 bg-gradient-to-r from-gray-700 to-gray-900 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000"></span>
-              <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-400 group-hover:from-gray-100 group-hover:to-gray-300 transition duration-300">
-                Bold Voice Systems
+            <span className="relative inline-block cursor-pointer">
+              {/* Always-on strong glow */}
+              <span className="absolute -inset-2 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-xl blur-2xl opacity-80"></span>
+
+              {/* Logo image */}
+              <span className="relative">
+                <Image
+                  src="/logo.png"
+                  alt="Bold Voice Systems Logo"
+                  width={160} // increased size a bit, tweak if needed
+                  height={50}
+                  className="object-contain"
+                  priority
+                />
               </span>
             </span>
           </Link>

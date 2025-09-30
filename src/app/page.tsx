@@ -18,7 +18,7 @@ export default function Page() {
     title: "Master communication",
     description:
       "Transform you communication from hesitant to powerful , speak with clarlity , confidence and conviction anytime , anywhere",
-    videoUrl: "https://youtu.be/PGrtFamXEa4?si=OQbKMt3dwuKDLOkx",
+    videoUrl: "https://youtu.be/ZvUiJjn2QF8?si=rZUtYg94x0375pIk",
   };
 
   const pathname = usePathname();
