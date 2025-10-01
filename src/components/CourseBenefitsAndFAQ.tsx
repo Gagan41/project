@@ -89,7 +89,7 @@ export default function CourseBenefitsAndFAQ() {
               className="flex justify-center"
             >
               <Image
-                src="/photo.jpg"
+                src="/ash.jpg"
                 alt="About Me"
                 width={400}
                 height={400}
