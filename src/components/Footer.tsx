@@ -233,7 +233,7 @@ export default function Footer() {
         content={
           <div className="text-black text-sm leading-relaxed space-y-4 max-h-[70vh] overflow-y-auto pr-2">
             <h3 className="font-semibold">
-              11. All Sales Are Final — No Refunds
+              All Sales Are Final — No Refunds
             </h3>
             <p>
               All purchases made on Bold Voice Systems are final. We do not

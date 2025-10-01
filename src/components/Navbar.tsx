@@ -5,13 +5,11 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Menu, X, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useModal } from "../context/ModalContext";
 import Image from "next/image";
 
 export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { openModal } = useModal();
 
   const scrollToFeatures = () => {
     const section = document.getElementById("features");
@@ -35,20 +33,17 @@ export default function Navbar() {
         <div className="flex items-center justify-between max-w-7xl mx-auto w-full">
           {/* Logo */}
           <Link href="/">
-            <span className="relative inline-block cursor-pointer">
-              {/* Always-on strong glow */}
-              <span className="absolute -inset-2 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-xl blur-2xl opacity-80"></span>
-
-              {/* Logo image */}
-              <span className="relative">
-                <Image
-                  src="/logo.png"
-                  alt="Bold Voice Systems Logo"
-                  width={160} // increased size a bit, tweak if needed
-                  height={50}
-                  className="object-contain"
-                  priority
-                />
+            <span className="relative inline-flex items-end cursor-pointer">
+              <Image
+                src="/logo.png"
+                alt="Bold Voice Systems Logo"
+                width={140}
+                height={40}
+                className="object-contain"
+                priority
+              />
+              <span className="ml-1 text-xs font-medium text-white">
+                Community
               </span>
             </span>
           </Link>
@@ -63,7 +58,6 @@ export default function Navbar() {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-400 group-hover:w-full transition-all duration-300"></span>
             </button>
 
-            {/* Conditionally render Courses only if user is logged in */}
             {user && (
               <Link href="/course-info" prefetch={false}>
                 <button className="relative font-medium text-gray-300 hover:text-gray-100 transition-all duration-300 group">
@@ -89,6 +83,42 @@ export default function Navbar() {
                 </button>
               </Link>
             )}
+
+            {/* ✅ Help Dropdown */}
+            <div className="relative group">
+              <button className="relative font-medium text-gray-300 hover:text-gray-100 transition-all duration-300 group">
+                <span className="relative z-10">Help</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-400 group-hover:w-full transition-all duration-300"></span>
+              </button>
+
+              {/* Dropdown Menu */}
+              <div className="absolute left-0 mt-2 w-48 bg-black/95 border border-gray-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transform -translate-y-2 transition-all duration-300">
+                <Link
+                  href="/terms"
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800 hover:text-white rounded-t-lg"
+                >
+                  Terms of Service
+                </Link>
+                <Link
+                  href="/privacy"
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800 hover:text-white"
+                >
+                  Privacy Policy
+                </Link>
+                <Link
+                  href="/refund"
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800 hover:text-white"
+                >
+                  Refund Policy
+                </Link>
+                <Link
+                  href="/contact"
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800 hover:text-white rounded-b-lg"
+                >
+                  Contact Us
+                </Link>
+              </div>
+            </div>
           </div>
 
           {/* Desktop Auth Buttons */}
@@ -168,42 +198,80 @@ export default function Navbar() {
                 <X className="w-6 h-6 text-gray-400 group-hover:text-white" />
               </button>
 
-              <button
-                onClick={scrollToFeatures}
-                className="w-full text-center font-medium text-gray-400 hover:text-white transition-all duration-300 group"
-              >
-                <span className="relative z-10">Features</span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
-              </button>
+              {/* ✅ Mobile Nav Links (All Unified) */}
+              <div className="flex flex-col space-y-5 mt-6 w-full text-center text-white">
+                <button
+                  onClick={scrollToFeatures}
+                  className="relative w-full text-center font-medium hover:text-white transition-all duration-300 group"
+                >
+                  <span className="relative z-10">Features</span>
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-white group-hover:w-1/2 transition-all duration-300"></span>
+                </button>
 
-              {/* Conditionally render Courses only if user is logged in */}
-              {user && (
-                <Link href="/course-info" prefetch={false}>
-                  <button className="w-full text-center font-medium text-gray-300 hover:text-gray-100 transition-all duration-300 group">
-                    <span className="relative z-10">Courses</span>
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-400 group-hover:w-full transition-all duration-300"></span>
-                  </button>
+                {user && (
+                  <Link
+                    href="/course-info"
+                    prefetch={false}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <span className="relative inline-block w-full text-center font-medium hover:text-white transition-all duration-300 group">
+                      <span className="relative z-10">Courses</span>
+                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-white group-hover:w-1/2 transition-all duration-300"></span>
+                    </span>
+                  </Link>
+                )}
+
+                <button
+                  onClick={scrollToAbout}
+                  className="relative w-full text-center font-medium hover:text-white transition-all duration-300 group"
+                >
+                  <span className="relative z-10">About</span>
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-white group-hover:w-1/2 transition-all duration-300"></span>
+                </button>
+
+                {user?.role === "admin" && (
+                  <Link
+                    href="/admin/dashboard"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <span className="relative inline-block w-full text-center font-medium hover:text-white transition-all duration-300 group">
+                      <span className="relative z-10">Admin Dashboard</span>
+                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-white group-hover:w-1/2 transition-all duration-300"></span>
+                    </span>
+                  </Link>
+                )}
+
+                {/* ✅ Unified Quick Links */}
+                <Link href="/terms" onClick={() => setIsMenuOpen(false)}>
+                  <span className="relative inline-block w-full text-center font-medium hover:text-white transition-all duration-300 group">
+                    <span className="relative z-10">Terms of Service</span>
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-white group-hover:w-1/2 transition-all duration-300"></span>
+                  </span>
                 </Link>
-              )}
 
-              <button
-                onClick={scrollToAbout}
-                className="w-full text-center font-medium text-gray-300 hover:text-gray-100 transition-all duration-300 group"
-              >
-                <span className="relative z-10">About</span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-400 group-hover:w-full transition-all duration-300"></span>
-              </button>
-
-              {user?.role === "admin" && (
-                <Link href="/admin/dashboard">
-                  <button className="w-full text-center font-medium text-gray-400 hover:text-white transition-all duration-300 group">
-                    <span className="relative z-10">Admin Dashboard</span>
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
-                  </button>
+                <Link href="/privacy" onClick={() => setIsMenuOpen(false)}>
+                  <span className="relative inline-block w-full text-center font-medium hover:text-white transition-all duration-300 group">
+                    <span className="relative z-10">Privacy Policy</span>
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-white group-hover:w-1/2 transition-all duration-300"></span>
+                  </span>
                 </Link>
-              )}
 
-              {/* Mobile Menu Buttons */}
+                <Link href="/refund" onClick={() => setIsMenuOpen(false)}>
+                  <span className="relative inline-block w-full text-center font-medium hover:text-white transition-all duration-300 group">
+                    <span className="relative z-10">Refund Policy</span>
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-white group-hover:w-1/2 transition-all duration-300"></span>
+                  </span>
+                </Link>
+
+                <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
+                  <span className="relative inline-block w-full text-center font-medium hover:text-white transition-all duration-300 group">
+                    <span className="relative z-10">Contact Us</span>
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-white group-hover:w-1/2 transition-all duration-300"></span>
+                  </span>
+                </Link>
+              </div>
+
+              {/* Mobile Auth Buttons */}
               {user ? (
                 <>
                   <Link href="/profile">
@@ -217,32 +285,6 @@ export default function Navbar() {
                   >
                     Logout
                   </button>
-                  {/* Mobile Footer Links in Drawer */}
-                  <div className="mt-auto w-full border-t border-gray-800 pt-4 text-center text-sm text-gray-500">
-                    <button
-                      onClick={() => {
-                        setIsMenuOpen(false);
-                        openModal("terms");
-                      }}
-                      className="block w-full py-1 hover:text-gray-300"
-                    >
-                      Terms of Service
-                    </button>
-
-                    <button
-                      onClick={() => {
-                        setIsMenuOpen(false);
-                        openModal("refund");
-                      }}
-                      className="block w-full py-1 hover:text-gray-300"
-                    >
-                      Refund Policy
-                    </button>
-                    <div className="mt-2 text-gray-600">
-                      © {new Date().getFullYear()} Bold Voice Systems. All
-                      rights reserved.
-                    </div>
-                  </div>
                 </>
               ) : (
                 <div className="flex flex-col gap-3 mt-4 w-full items-center">
