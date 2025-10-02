@@ -96,7 +96,7 @@ const PaymentDialog: React.FC = () => {
         key: paymentData.key,
         amount: paymentData.amount,
         currency: "INR",
-        name: "CourseSite",
+        name: "Bold Voice Systems Community",
         description: `${plan} Plan`,
         order_id: paymentData.orderId,
         handler: async function (response: RazorpayResponseType) {
