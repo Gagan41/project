@@ -4,7 +4,7 @@ import "./globals.css";
 import Footer from "../components/Footer";
 import LayoutWithNavbar from "../components/LayoutWithNavbar";
 import { AuthProvider } from "../context/AuthContext";
-import { FloatingGuidancePayment } from "../components/PaymentDialog";
+//import { FloatingGuidancePayment } from "../components/PaymentDialog";
 import { ModalProvider } from "../context/ModalContext";
 
 export const metadata: Metadata = {
@@ -36,7 +36,7 @@ export default function RootLayout({
             <LayoutWithNavbar />
             {/* Added pb-24 only for small screens to avoid overlap with floating button */}
             <main className="flex-grow pt-20 pb-24 sm:pb-0">{children}</main>
-            <FloatingGuidancePayment />
+            {/* <FloatingGuidancePayment /> */}
             <Footer />
           </ModalProvider>
         </AuthProvider>

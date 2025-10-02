@@ -37,12 +37,12 @@ export default function Navbar() {
               <Image
                 src="/logo.png"
                 alt="Bold Voice Systems Logo"
-                width={140}
-                height={40}
+                width={100}
+                height={35}
                 className="object-contain"
                 priority
               />
-              <span className="ml-1 text-xs font-medium text-white">
+              <span className="ml-1 text-xs font-sm text-white">
                 Community
               </span>
             </span>
