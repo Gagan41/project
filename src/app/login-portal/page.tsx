@@ -46,7 +46,7 @@ export default function LoginPortal() {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-gray-700 to-gray-900 rounded-full blur opacity-25 animate-pulse"></div>
               <Image
-                src="/img.jpg"
+                src="/new.jpg"
                 alt="Logo"
                 width={100}
                 height={100}
