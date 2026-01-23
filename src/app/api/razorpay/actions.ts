@@ -15,7 +15,7 @@ export type RazorpayResponseType = {
 
 // Base prices in rupees
 const PLAN_PRICES = {
-  "one-time": 9733.0,
+  "one-time": 2899.0,
 };
 
 // Function to ensure last decimal is 0

@@ -1,8 +1,8 @@
 "use client";
 import { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
-import { AuthContext } from "../../context/AuthContext";
-import { postData } from "../../utils/api";
+import { AuthContext } from "@/context/AuthContext";
+import { postData } from "@/utils/api";
 
 export default function CheckoutPage() {
   const { user } = useContext(AuthContext);

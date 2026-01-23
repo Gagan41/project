@@ -6,6 +6,10 @@ if (!MONGODB_URI) {
   throw new Error("Please define the MONGODB_URI environment variable");
 }
 
+if (process.env.NODE_ENV === "production" && MONGODB_URI.includes("localhost")) {
+  throw new Error("MONGODB_URI cannot be localhost in production");
+}
+
 // Extend the global type so TypeScript knows about `_mongo`
 declare global {
   // eslint-disable-next-line no-var

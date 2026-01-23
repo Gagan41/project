@@ -174,7 +174,7 @@ const PaymentDialog: React.FC = () => {
             <PricingCard
               title="Course Only Purchase"
               description="Pay once and access the course forever."
-              price="₹9,733"
+              price="₹2,899"
               buttonText="Get Started"
               plan="one-time"
               onPurchase={handlePurchase}
@@ -275,7 +275,7 @@ export const FloatingGuidancePayment: React.FC = () => {
         </span>
         <div className="w-5 sm:w-6 border-b border-dotted border-gray-500 mb-0.5 sm:mb-1" />
         <span className="text-base sm:text-lg font-bold bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">
-          ₹9,733
+          ₹2,899
         </span>
       </div>
       <button
