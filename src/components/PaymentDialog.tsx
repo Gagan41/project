@@ -271,7 +271,7 @@ export const FloatingGuidancePayment: React.FC = () => {
           Limited Time Offer
         </span>
         <span className="text-[11px] sm:text-xs text-gray-400 line-through mb-0.5 sm:mb-1">
-          ₹18,000
+          ₹5,000
         </span>
         <div className="w-5 sm:w-6 border-b border-dotted border-gray-500 mb-0.5 sm:mb-1" />
         <span className="text-base sm:text-lg font-bold bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">
